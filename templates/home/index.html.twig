@@ -1,0 +1,241 @@
+ {% extends 'layout/layout.html.twig' %}
+
+
+{% block body %}
+
+    {# ==================================================================================================   #}
+
+
+    <div class=" row match-height ">
+        <div class="col-md-8 col-sm-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">:: roles</h4>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse">
+                                    <i class="icon-minus4"></i></a></li>
+                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 mb-2 h400">
+                                <div class="table-responsive ">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Nombre</th>
+                                                <th>Descripcion</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for pvt in roles %}
+                                            <tr>
+                                                <td>{{pvt.id}}</td>
+                                                <td>{{pvt.name}}</td>
+                                                <td>{{pvt.description}}</td>
+                                                <td>
+                                                    <a title="Edit rol">
+                                                        <button type="button"
+                                                                onclick="htmLoadUrl('#editrg','{{ path('roles_show',{id:pvt.id}) }}')"
+                                                                class="btn btn-primary btn-sm">
+                                                            <i class="icon-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a title="Ver rol">
+                                                        <button class="btn btn-primary btn-sm btn-info">
+                                                            <i class="icon-eye"></i>
+                                                        </button>
+                                                    </a>
+
+                                                    <a title="Delete rol">
+                                                        <button class="btn btn-primary btn-sm btn-danger">
+                                                            <i class="icon-trash2"></i>
+                                                        </button>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">:: Agregar rol</h4>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                {{ form_start(form,{'class':'form'}) }}
+                                    {%  if not form.vars.valid %}
+                                        <div class="alert alert-danger no-border mb-2 small" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>Formulario invalido</strong>
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="name">Nombre :</label>
+                                                <div class="form-grop">
+                                                    {{ form_widget(form.name) }}
+                                                    <div class=" invalid-feedback text-danger">
+                                                        {{ form_errors(form.name) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12"><br></div>
+                                            <div class="col-md-12">
+                                                <label for="description">Descripcion :</label>
+                                                <div class="form-group">
+                                                    {{ form(form.description) }}
+                                                    <div class="col-md-12 invalid-feedback text-danger">
+                                                        {{ form_errors(form.description) }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <hr>
+                                        </div>
+                                        {{ form_row(form._token) }}
+                                        {{ form_widget(form.save) }}
+                                    </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ==================================================================================================   #}
+
+
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">:: Ajustes</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-12 mb-4" id="editrg">
+                                {{ form_start(form_edit,{'class':'form'}) }}
+                                {%  if not form_edit.vars.valid %}
+                                    <div class="alert alert-danger no-border mb-2 small" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <strong>Formulario invalido</strong>
+                                    </div>
+                                {% endif %}
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="name">Nombre :</label>
+                                            <div class="form-grop">
+                                                {{ form_widget(form_edit.name) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12"><br></div>
+                                        <div class="col-md-12">
+                                            <label for="description">Descripcion :</label>
+                                            <div class="form-group">
+                                                {{ form(form_edit.description) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr>
+                                    </div>
+                                </div>
+                                {{ form_end(form_edit) }}
+                            </div>
+                            <div class="col-xl-1 col-lg-0 mb-2"></div>
+                            <div class="col-xl-6 col-lg-12 mb-2">
+                                aosiados
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{#    <div class="col-xs-12 col-md-12">#}
+{#        <div class="card">#}
+{#            <div class="card-header">#}
+{#                <h4 class="card-title">:: Ajustes</h4>#}
+{#                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>#}
+{#                <div class="heading-elements">#}
+{#                    <ul class="list-inline mb-0">#}
+{#                        <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>#}
+{#                        <li><a data-action="expand"><i class="icon-expand2"></i></a></li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="card-body collapse in">#}
+{#                <div class="card-block">#}
+{#                    <div class="row">#}
+
+{#                        <div class="col-xl-6 col-lg-12 mb-2">#}
+
+
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <style type="text/css">
+            textarea{
+                resize: none;
+            }
+            .h400{
+                max-height: 400px;
+                overflow-y: auto;
+            }
+    </style>
+{% endblock %}
+
+ {% block js %}
+    <script src="{{ asset('utils/functions.js') }} " type="text/javascript"></script>
+ {% endblock %}

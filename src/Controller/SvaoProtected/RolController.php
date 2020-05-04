@@ -4,101 +4,159 @@ namespace App\Controller\SvaoProtected;
 
 use App\Form\SvaoProtected\RolType;
 use App\Repository\RolRepository;
-use mysql_xdevapi\Exception;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Column\NumberColumn;
+use Omines\DataTablesBundle\Column\TextColumn;
+
+use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Rol;
-use Symfony\Component\Validator\Constraints\Json;
 
 class RolController extends AbstractController
 {
+
     /**
      * @Route("/svao/protected/roles", name="index_rol")
      */
-    public function index(RolRepository $rep)
+    public function index(Request $request)
     {
-        $roles = $rep->findAll();
-        $rol= new Rol();
-
-        $editForm=$this->createForm(RolType::class,$rol,[
-           'action'=>$this->generateUrl('store_rol')
-        ]);
-
-        $form=$this->createForm(RolType::class,$rol,[
-            'action'=>$this->generateUrl('store_rol'),
-            'method'=>'POST',
-        ]);
-
-        return $this->render('home/index.html.twig', [
-            'roles' => $roles,
-            'form'  =>$form->createView(),
-            'form_edit'=>$editForm->createView(),
+        $list=$this->getDoctrine()
+                    ->getRepository(Rol::class)
+                    ->findAll();
+        return $this->render('protected/rol/roles.html.twig', [
+            'list' => $list,
         ]);
     }
 
     /**
-     * @Route("svao/store/rol",name="store_rol",methods={"POST",})
+     * @Route("svao/protected/roles/create", name="roles.create")
+     */
+    public function create(){
+        $rol= new Rol();
+
+        $form=$this->createForm(RolType::class,$rol,[
+            'action'=>$this->generateUrl('roles.store'),
+            'method'=>'POST',
+        ]);
+
+        $view=$this->renderView('protected/rol/create.html.twig',[
+                    'form'=>$form->createView(),
+                ]);
+
+        return $this->json([
+                'status'=>'success',
+                'html'=>$view
+            ]);
+    }
+    /**
+     * @Route("svao/store/rol",name="roles.store",methods={"POST",})
      */
     public function store(Request $request){
-        $em=$this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
         $rol=new Rol();
         $form=$this->createForm(RolType::class,$rol);
         $form->handleRequest($request);
         if($form->isValid()){
-
             $rol=$form->getData();
-
             try {
-                $em->persist($rol);
-                $em->flush();
-                $this->addFlash(
-                    'success',
-                    'Rol almacenado correctamente'
-                );
+                $entityManager->persist($rol);
+                $entityManager->flush();
 
             }catch (Exception $e){
-                $this->addFlash(
-                    'danger',
-                    'Rol almacenado correctamente'
-                );
-
+                //..
             }
-
-            return new RedirectResponse($this->generateUrl('index_rol'));
-
+            $rol2=new Rol();
+            $form=$this->createForm(RolType::class,$rol2);
+            $status="success";
+            $view=$this->renderView('protected/rol/create.html.twig',[
+                'form'=>$form->createView(),
+            ]);
+        }else{
+            $status="form_erors";
+            $view=$this->renderView('protected/rol/create.html.twig',[
+                            'form'=>$form->createView(),
+            ]);
         }
-        return $this->render('home/index.html.twig',[
-            'roles' =>$em->getRepository(Rol::class)->findAll(),
-            'form'  => $form->createView()
-
+        return $this->json([
+                    'status'=>$status,
+                    'html'=>$view,
         ]);
     }
 
+
     /**
-     * @Route("svao/protected/roles/{id}",name="roles_show",methods={"GET"},requirements={"id"="\d+"})
+     * @Route("svao/protected/edit/{id}",name="roles.edit",methods={"GET"})
      */
-    public function show(int $id){
+    public function edit(int $id){
+
         $rol = $this->getDoctrine()
             ->getRepository(Rol::class)
             ->find($id);
 
         $form=$this->createForm(RolType::class,$rol,[
-            'action'=>$this->generateUrl('store_rol')
-        ]);
+                                    'action'=>$this->generateUrl('roles.update',['id'=>$id]),
+                                    'method'=>'PUT',
+                                ]);
 
         //Renderizamos el form para enviarlo . . .
-        $html=$this->renderView('protected/rol/edit.html.twig',[
-            'form'  =>$form->createView(),
-            'edit' =>false,
-            ]);
+        $view=$this->renderView('protected/rol/edit.html.twig',[
+                                    'form'=>$form->createView(),
+                                    'id'=>$id,
+                                ]);
 
-        //Retornamos el Json . . .
-        $p_view=['status'=>'success',
-                'html'=>$html
-                ];
-        return new JsonResponse($p_view);
+        return $this->json([
+            'status'=>'success',
+            'html'=>$view
+        ]);
+    }
+    /**
+     * @Route("svao/protected/roles/update/{id}",name="roles.update",methods={"PUT"})
+     */
+    public function update(Request $request,$id){
+        $entityManager = $this->getDoctrine()->getManager();
+        $rol=$entityManager->getRepository(Rol::class)->find($id);
+        return $rol;
+
+        $form=$this->createForm(RolType::class,New Rol());
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $rol=$form->getData();
+            try {
+                $entityManager->persist($rol);
+                $entityManager->flush();
+
+            }catch (Exception $e){
+                //..
+            }
+            $rol2=new Rol();
+            $form=$this->createForm(RolType::class,$rol2);
+            $status="success";
+            $view=$this->renderView('protected/rol/create.html.twig',[
+                'form'=>$form->createView(),
+            ]);
+        }else{
+            $status="form_erors";
+            $view=$this->renderView('protected/rol/create.html.twig',[
+                'form'=>$form->createView(),
+            ]);
+        }
+        return $this->json([
+            'status'=>$status,
+            'html'=>$view,
+        ]);
+
+//        //Renderizamos el form para enviarlo . . .
+//        $view=$this->renderView('protected/rol/create.html.twig',[
+//            'form'=>$form->createView(),
+//        ]);
+//
+//        return $this->json([
+//            'status'=>'success',
+//            'html'=>$view
+//        ]);
     }
 }

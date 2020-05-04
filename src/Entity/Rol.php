@@ -8,9 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *  @ORM\Entity(repositoryClass="App\Repository\RolRepository")
- *  @ORM\Table(name="roles")
+ *  @ORM\Table(name="roles",)
  * @UniqueEntity("name")
  */
+
 class Rol
 {
     /**
@@ -21,8 +22,9 @@ class Rol
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=155,name="cs_name")
+     * @ORM\Column(type="string",nullable=true, length=155,name="nombre")
      *
+     * @Assert\NotBlank
      * @Assert\Length(
      *     min=3,
      *     max=30,
@@ -32,12 +34,12 @@ class Rol
     private $name;
 
     /**
-     * @ORM\Column(type="boolean",name="cb_protected")
+     * @ORM\Column(type="boolean",name="protegido")
      */
     private $protected;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true,name="cs_desc")
+     * @ORM\Column(type="string", length=255, nullable=true,name="descripcion")
      * @Assert\Length(
      *     max=30,
      *     maxMessage="Logitud de campo excedida"

@@ -24,6 +24,20 @@
 
        {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
 
+            <li class=" nav-item">
+                <a href="#">
+                    <i class="icon-list"></i>
+                    <span data-i18n="nav.dash.main" class="menu-title">Catalogos</span>
+                </a>
+                <ul class="menu-content">
+                    <li><a href="{{ path('aeropuertos.list') }}" data-i18n="nav.dash.main" class="menu-item">Aeropuertos</a>
+                    </li>
+                </ul>
+                <ul class="menu-content">
+                    <li><a href="{{ path('clientes.list') }}" data-i18n="nav.dash.main" class="menu-item">Clientes</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

@@ -45,13 +45,12 @@ function loadCardPostAjax(form,target) {
         success: function (data) {
             if(data.status=="success")
             {
-                alert("agregado mes");
+                location.reload();
              //   dtbl.DataTable().ajax.reload();
                // showMesssage('success','Transaccion completada');
             }
             if(data.status=="form_errors")
             {
-                alert("agregado mes");
                 // showMesssage('notice','Se encontraron errrores en el formulario, porfavor corriga e intente nuevamente');
             }
 

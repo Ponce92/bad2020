@@ -18,10 +18,11 @@ use App\Entity\Rol;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("/homesvao", name="homesvao")
      */
-    public function index(RolRepository $rep)
+    public function index()
     {
-        return new RedirectResponse($this->generateUrl('index_rol'));
+        return $this->render('home/index.html.twig', ['band'=>"true"]);
+
     }
 }

@@ -1,4 +1,4 @@
- {% extends 'layout/layout.html.twig' %}
+{% extends 'layout/layout.html.twig' %}
     {% block header_links %}
         <div class="col col-md-12">
             <div class="content-header-right breadcrumb-new" style="padding-left: 15px;padding-bottom: 10px;">
@@ -8,9 +8,9 @@
                             <li class="breadcrumb-item">
                                 <a href="{{ path('homesvao') }}">svao</a>
                             </li>
-                            <li class="breadcrumb-item">protected
+                            <li class="breadcrumb-item">private
                             </li>
-                            <li class="breadcrumb-item">Roles
+                            <li class="breadcrumb-item">Catalogo de clientes
                             </li>
                         </ol>
                     </div>
@@ -25,15 +25,27 @@
         <div class="col-md-8 col-sm-12" >
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: roles</h4>
+                    <h4 class="card-title">:: Clientes</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
-                        <button type="button"
-                                id="btn-create"
-                                onclick="loadTarget('{{ path('roles.create') }}',$('#rol_crd'))"
-                                class="btn btn-success">
-                            <i class="icon-plus"  style="color: white;"></i> Agregar
-                        </button>
+                        <div class="btn-group mr-1 mb-1 show">
+                            <button type="button" class="btn btn-success dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="true"></i> Agregar cliente
+                            </button>
+                            <div class="dropdown-menu show"
+                                 x-placement="bottom-start">
+                                <li class="dropdown-item btn" onclick="loadTarget('{{ path('clientes.create.natural') }}',$('#clientesCard'))">Cliente natural</li>
+                                <li class="dropdown-item btn" onclick="loadTarget('{{ path('clientes.create.empresarial') }}',$('#clientesCard'))" >Cliente empresarial</li>
+                            </div>
+                        </div>
+{#                        <button type="button"#}
+{#                                id="btn-create"#}
+{#                                onclick="loadTarget('{{ path('roles.create') }}',$('#rol_crd'))"#}
+{#                                class="btn btn-success">#}
+{#                            <i class="icon-plus"  style="color: white;"></i> Agregar#}
+{#                        </button>#}
                     </div>
                 </div>
                 <div class="card-body collapse in">
@@ -43,25 +55,25 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Aciones</th>
+                                <th>Telefono</th>
+                                <th>Accion</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for pvt in list %}
                                 <tr>
                                     <td>{{ pvt.id }}</td>
-                                    <td>{{ pvt.name }}</td>
-                                    <td>{{ pvt.description }}</td>
+                                    <td>{{ pvt.nombres }}</td>
+                                    <td>{{ pvt.fijo }}</td>
                                     <td width="100">
                                         <button type="button"
-                                                title="Editar {{ pvt.name }}"
-                                                onclick="loadTarget('{{ path('roles.edit',{'id':pvt.id}) }}',$('#rol_crd'))"
+                                                title="editar"
+                                                onclick=""
                                                 class="btn btn-sm btn-info">
                                             <i class="icon-edit"></i>
                                         </button>
                                         <button type="button"
-                                                title="Permisos asignados a : {{ pvt.name }}"
+                                                title="Ajuste"
                                                 onclick=""
                                                 class="btn btn-sm btn-primary">
                                             <i class="icon-cog2"></i>
@@ -79,7 +91,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Rol</h4>
+                    <h4 class="card-title">:: Cliente</h4>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
@@ -88,7 +100,7 @@
                     </div>
                 </div>
                 <div class="card-body collapse in">
-                    <div class="card-block" id="rol_crd">
+                    <div class="card-block" id="clientesCard">
 
                     </div>
                 </div>
@@ -102,44 +114,44 @@
 
 
     <style type="text/css">
-            textarea{
-                resize: none;
-            }
-            .h400{
-                max-height: 400px;
-                overflow-y: auto;
-            }
+        textarea{
+            resize: none;
+        }
+        .h400{
+            max-height: 400px;
+            overflow-y: auto;
+        }
 
 
-            table.sget tbody tr:nth-of-type(odd){
-                background-color:   rgba(245,247,250,1);
-            }
-            table.sget tbody tr td{
-                padding-bottom: 3px !important;
-                padding-top: 3px !important;
-                padding-left: 8px !important;
-                padding-right: 8px !important;
-                vertical-align: middle;
-            }
-            table.sget{
-                -webkit-border-top-left-radius: 10px;
-                -webkit-border-top-right-radius:10px ;
-                -moz-border-radius-topleft: 10px;
-                -moz-border-radius-topright: 10px;
-            }
+        table.sget tbody tr:nth-of-type(odd){
+            background-color:   rgba(245,247,250,1);
+        }
+        table.sget tbody tr td{
+            padding-bottom: 3px !important;
+            padding-top: 3px !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+            vertical-align: middle;
+        }
+        table.sget{
+            -webkit-border-top-left-radius: 10px;
+            -webkit-border-top-right-radius:10px ;
+            -moz-border-radius-topleft: 10px;
+            -moz-border-radius-topright: 10px;
+        }
 
-            table.sget tbody  tr:hover{
-                background-color:   rgba(49,165,248,.2);
-            }
+        table.sget tbody  tr:hover{
+            background-color:   rgba(49,165,248,.2);
+        }
 
-            textarea{
-                resize: none;
-            }
+        textarea{
+            resize: none;
+        }
     </style>
 
 {% endblock %}
 
  {% block js %}
-{#     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>#}
+     {#     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>#}
      <script src="{{ asset('utils/functions.js') }} " type="text/javascript"></script>
  {% endblock %}

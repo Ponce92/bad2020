@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        {{ form_start(form,{'attr':{  'class':'form',
+            'data-url': path('clientes.store.natural'),
+            'id':'createFormTop'}}) }}
+        {{ form_row(form._token) }}
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="name">Nombres :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.nombres) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.nombres) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="name">Apellidos :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.apellidos) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.apellidos) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="name">Telefono movil :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.movil) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.movil) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name">Tipo documento:</label>
+                    <div class="form-group">
+                        {{ form_widget(form.tipoDoc) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.tipoDoc) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="name">Documento:</label>
+                    <div class="form-group">
+                        {{ form_widget(form.documento) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.documento) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions right">
+                <button type="button"
+                        onclick="loadCardPostAjax($('#createFormTop'),$('#clientesCard'))"
+                        class="btn btn-success">
+                    <i class="icon-plus"></i> Guardar
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

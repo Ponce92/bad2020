@@ -22,14 +22,8 @@ class Rol
     private $id;
 
     /**
-     * @ORM\Column(type="string",nullable=true, length=155,name="nombre")
+     * @ORM\Column(type="string", length=155,name="nombre")
      *
-     * @Assert\NotBlank
-     * @Assert\Length(
-     *     min=3,
-     *     max=30,
-     *     minMessage="nombre muy corto"
-     *          )
      */
     private $name;
 
@@ -40,19 +34,8 @@ class Rol
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true,name="descripcion")
-     * @Assert\Length(
-     *     max=30,
-     *     maxMessage="Logitud de campo excedida"
-     *          )
      */
     private $description;
-
-    public function __construct()
-    {
-        $this->setDescription('');
-        $this->setName('');
-        $this->setProtected(false);
-    }
 
     public function getId(): ?int
     {

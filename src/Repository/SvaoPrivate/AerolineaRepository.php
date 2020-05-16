@@ -2,7 +2,7 @@
 
 namespace App\Repository\SvaoPrivate;
 
-use App\Entity\SvaoPrivate\Aerolineas;
+use App\Entity\SvaoPrivate\Aerolinea;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

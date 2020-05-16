@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     {{--Estilos css de la plantilla principal    --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap4/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/fonts/icomoon.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/fonts/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main/main.css') }}">

@@ -10,7 +10,7 @@
                             </li>
                             <li class="breadcrumb-item">private
                             </li>
-                            <li class="breadcrumb-item">Catalogo areopuertos
+                            <li class="breadcrumb-item">Catalogo lineas aereas
                             </li>
                         </ol>
                     </div>
@@ -25,37 +25,36 @@
         <div class="col-md-8 col-sm-12" >
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Aeropuertos</h4>
+                    <h4 class="card-title">:: Lineas aereas</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
-                        <div class="btn-group mr-1 mb-1 show">
-                            <button type="button"
-                                    onclick="loadTarget('{{ path('aeropuertos.create') }}',$('#mainCard'))"
-                                    class="btn btn-success"
-                                    id="btn-create-main"></i> Agregar aeropuerto
-                            </button>
-                        </div>
+
+                        <button type="button"
+                                id="btn-create"
+                                onclick="loadTarget('{{ path('aerolineas.create') }}',$('#mainCard'))"
+                                class="btn btn-success">
+                            <i class="icon-plus"  style="color: white;"></i> Agregar
+                        </button>
                     </div>
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block" id="dtable">
                         <table class="table table-bordered sget">
                             <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Ciudad</th>
-                                    <th>Ciudad</th>
-                                    <th>Accion</th>
-                                </tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Telefono</th>
+                                <th>Accion</th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for pvt in list %}
                                 <tr>
                                     <td>{{ pvt.id }}</td>
-                                    <td>{{ pvt.nombres }}</td>
-                                    <td>{{ pvt.fijo }}</td>
+                                    <td>{{ pvt.nombre }}</td>
+                                    <td>{{ pvt.nombreCorto }}</td>
+
                                     <td width="100">
                                         <button type="button"
                                                 title="editar"
@@ -82,7 +81,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Aeropuerto</h4>
+                    <h4 class="card-title">:: Aerolinea</h4>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>

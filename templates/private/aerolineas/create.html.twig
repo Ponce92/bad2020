@@ -1,0 +1,91 @@
+
+{{ form_start(form,{'attr':{  'class':'form',
+    'data-url': path('aerolineas.store'),
+    'id':'createForm'}}) }}
+    {{ form_row(form._token) }}
+<div class="row">
+    <div class="col-md-3">
+        <label for="nombre">Codigo :</label>
+        <div class="form-group">
+            {{ form_widget(form.codigo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.codigo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <label for="nombre">Nombre de aerolinea :</label>
+        <div class="form-group">
+            {{ form_widget(form.nombre) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.nombre) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="nombre">Nombre corto :</label>
+        <div class="form-group">
+            {{ form_widget(form.nombreCorto) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.nombreCorto) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <label for="nombre">Encargado :</label>
+        <div class="form-group">
+            {{ form_widget(form.nombreEncargado) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.nombreEncargado) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="nombre">Correo :</label>
+        <div class="form-group">
+            {{ form_widget(form.correo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.correo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="nombre">Pagina Web</label>
+        <div class="form-group">
+            {{ form_widget(form.paginaWeb) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.paginaWeb) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label for="fechaFundacion">fecha fundacion :</label>
+        <div class="form-group">
+            {{ form_widget(form.fechaFundacion) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.fechaFundacion) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="form-actions right">
+        <button type="button"
+                onclick="loadCardPostAjax($('#createForm'),$('#mainCard'))"
+                class="btn btn-success">
+            <i class="icon-plus"></i> Guardar
+        </button>
+    </div>
+
+{{ form_end(form) }}
+

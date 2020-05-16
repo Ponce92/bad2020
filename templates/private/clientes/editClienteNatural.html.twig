@@ -1,28 +1,31 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
         {{ form_start(form,{'attr':{  'class':'form',
-            'data-url': path('clientes.store.empresarial'),
-            'id':'createFormTop'}}) }}
+            'data-url': path('clientes.natural.update',{'id':id}),
+            'id':'editForm'}}) }}
         {{ form_row(form._token) }}
+
+        {{ form_errors(form) }}
         <div class="form-body">
             <div class="row">
                 <div class="col-md-12">
-                    <label for="name">Nombre de empresa :</label>
+                    <label for="name">Nombres :</label>
                     <div class="form-group">
                         {{ form_widget(form.nombres) }}
-                        <div class=" invalid-feedback text-danger">
+                        <div class="invalid-feedback text-danger">
                             {{ form_errors(form.nombres) }}
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
-                    <label for="name">Persona encargado :</label>
+                    <label for="name">Apellidos :</label>
                     <div class="form-group">
-                        {{ form_widget(form.encargado) }}
+                        {{ form_widget(form.apellidos) }}
                         <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.encargado) }}
+                            {{ form_errors(form.apellidos) }}
                         </div>
                     </div>
                 </div>
@@ -30,18 +33,6 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <label for="name">Direccion :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.direccion) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.direccion) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
                     <label for="name">Telefono movil :</label>
                     <div class="form-group">
                         {{ form_widget(form.movil) }}
@@ -50,35 +41,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="name">Telefono fijo :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.fijo) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.fijo) }}
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Numero Nit :</label>
+                <div class="col-md-6">
+                    <label for="name">Tipo documento:</label>
                     <div class="form-group">
-                        {{ form_widget(form.nit) }}
+                        {{ form_widget(form.tipoDoc) }}
                         <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.nit) }}
+                            {{ form_errors(form.tipoDoc) }}
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Numero Nic :</label>
+                <div class="col-md-6">
+                    <label for="name">Documento:</label>
                     <div class="form-group">
-                        {{ form_widget(form.nic) }}
+                        {{ form_widget(form.documento) }}
                         <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.nic) }}
+                            {{ form_errors(form.documento) }}
                         </div>
                     </div>
                 </div>
@@ -86,7 +66,7 @@
 
             <div class="form-actions right">
                 <button type="button"
-                        onclick="loadCardPostAjax($('#createFormTop'),$('#mainCard'))"
+                        onclick="loadCardPostAjax($('#editForm'),$('#mainCard'))"
                         class="btn btn-success">
                     <i class="icon-plus"></i> Guardar
                 </button>

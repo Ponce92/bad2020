@@ -8,9 +8,9 @@
                             <li class="breadcrumb-item">
                                 <a href="{{ path('homesvao') }}">svao</a>
                             </li>
-                            <li class="breadcrumb-item">private
+                            <li class="breadcrumb-item">protected
                             </li>
-                            <li class="breadcrumb-item">Catalogo areopuertos
+                            <li class="breadcrumb-item">usuarios
                             </li>
                         </ol>
                     </div>
@@ -25,48 +25,46 @@
         <div class="col-md-8 col-sm-12" >
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Aeropuertos</h4>
+                    <h4 class="card-title">:: Usuarios</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
-                        <div class="btn-group mr-1 mb-1 show">
-                            <button type="button"
-                                    onclick="loadTarget('{{ path('aeropuertos.create') }}',$('#mainCard'))"
-                                    class="btn btn-success"
-                                    id="btn-create-main"></i> Agregar aeropuerto
-                            </button>
-                        </div>
+
+                        <button type="button"
+                                id="btn-create"
+                                onclick="loadTarget('{{ path('usuarios.create') }}',$('#mainCard'))"
+                                class="btn btn-success">
+                            <i class="icon-plus"  style="color: white;"></i> Agregar
+                        </button>
                     </div>
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block" id="dtable">
                         <table class="table table-bordered sget">
                             <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Ciudad</th>
-                                    <th>Ciudad</th>
-                                    <th>Accion</th>
-                                </tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Telefono</th>
+                                <th>Accion</th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for pvt in list %}
                                 <tr>
                                     <td>{{ pvt.id }}</td>
-                                    <td>{{ pvt.nombres }}</td>
-                                    <td>{{ pvt.fijo }}</td>
+                                    <td>{{ pvt.nombre }}</td>
+                                    <td>{{ pvt.rol.name }}</td>
                                     <td width="100">
                                         <button type="button"
                                                 title="editar"
-                                                onclick=""
+                                                onclick="loadTarget('{{ path('protected.usuarios.edit',{'id':pvt.id}) }}',$('#mainCard'))"
                                                 class="btn btn-sm btn-info">
                                             <i class="icon-edit"></i>
                                         </button>
                                         <button type="button"
-                                                title="Ajuste"
-                                                onclick=""
-                                                class="btn btn-sm btn-primary">
+                                                title="Trash"
+                                                onclick="loadTarget('{{ path('usuaios.delete',{'id':pvt.id}) }}',$('#mainCard'))"
+                                                class="btn btn-sm btn-danger">
                                             <i class="icon-cog2"></i>
                                         </button>
                                     </td>
@@ -82,7 +80,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Aeropuerto</h4>
+                    <h4 class="card-title">:: Usuario</h4>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>

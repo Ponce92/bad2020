@@ -1,0 +1,35 @@
+<div class="col-md-12">
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <strong>Alerta!</strong> Se eliminara el cliente
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4"><strong>Nombre :</strong></div>
+        <div class="col-md-8"><p>        {{ cliente.nombres }}</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"><strong>Descripcion :</strong></div>
+        <div class="col-md-8"><p>        {{ cliente.movil }}</p></div>
+    </div>
+
+    <form class="form">
+
+        <div class="form-actions right">
+            <button type="button"
+                    onclick="$('#mainCard').html('');"
+                    class="btn btn-grey">
+                <i class="icon-close"></i> Cancelar
+            </button>
+            <button type="button"
+                    onclick="loadTarget('{{ path('clientes.destroy',{'id':cliente.id}) }}',$('#mainCard'))"
+                    class="btn btn-danger">
+                <i class="icon-trash2"></i> Eliminar
+            </button>
+        </div>
+    </form>
+
+</div>

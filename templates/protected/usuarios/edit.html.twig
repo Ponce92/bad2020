@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        {{ form_start(form,{'attr':{  'class':'form',
+            'data-url': path('protected.usuarios.edit',{'id':id}) ,
+            'id':'editFrom'}}) }}
+        {{ form_row(form._token) }}
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="name">Nombre :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.nombre) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.nombre) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="name">Selecione rol :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.rol) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.rol) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="button"
+                        onclick="loadCardPostAjax($('#editFrom'),$('#mainCard'))"
+                        class="btn btn-success">
+                    <i class="icon-plus"></i> Guardar
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

@@ -17,16 +17,14 @@ class ClienteEmpresarialType extends AbstractType
     {
         $builder
             ->add('nombres',TextType::class,['attr'=>['placeholder'=>'nombre'],
-                'required'=>true,
-                'constraints'=>[new Length(['min'=>6,'max'=>50])]
+                'constraints'=>[new Length(['min'=>4,'max'=>50]),new NotBlank()]
             ])
             ->add('direccion',TextType::class,['attr'=>['placeholder'=>'direccion'],
                 'required'=>true,
                 'constraints'=>[new Length(['min'=>6,'max'=>50]), new NotBlank()]
             ])
             ->add('fijo',NumberType::class,['attr'=>['placeholder'=>'tel.'],
-                'required'=>true,
-                'constraints'=>[new Length(['min'=>8,'max'=>8])]
+                'constraints'=>[new Length(['min'=>8,'max'=>8]),new NotBlank()]
             ])
             ->add('movil',NumberType::class,['attr'=>['placeholder'=>'movil.'],
                 'constraints'=>[new Length(['min'=>8,'max'=>8])]

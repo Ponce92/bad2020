@@ -2,9 +2,10 @@
 
 namespace App\Entity\SvaoPrivate;
 
-use App\Repository\SvaoPrivate\AreopuertoRepository;
+use App\Repository\SvaoPrivate\AeropuertoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=AeropuertoRepository::class)
@@ -46,12 +47,12 @@ class Aeropuerto
     private $bahias;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true,name="cuidad")
+     * @ORM\Column(type="string", length=255, nullable=true,name="ciudad")
      */
-    private $cuidad;
+    private $ciudad;
 
     /**
-     * @ORM\Column(type="integer",name="pais_id")
+     * @ORM\Column(type="integer",name="codigo_pais")
      */
     private $pais;
 
@@ -120,14 +121,14 @@ class Aeropuerto
         return $this;
     }
 
-    public function getCuidad(): ?string
+    public function getCiudad(): ?string
     {
-        return $this->cuidad;
+        return $this->ciudad;
     }
 
-    public function setCuidad(?string $cuidad): self
+    public function setCiudad(?string $ciudad): self
     {
-        $this->cuidad = $cuidad;
+        $this->ciudad = $ciudad;
 
         return $this;
     }

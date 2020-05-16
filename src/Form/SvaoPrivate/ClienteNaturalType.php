@@ -18,11 +18,9 @@ class ClienteNaturalType extends AbstractType
     {
         $builder
             ->add('nombres',TextType::class,['attr'=>['placeholder'=>'nombre'],
-                                                        'required'=>true,
-                                                        'constraints'=>[new Length(['min'=>6,'max'=>50])]
+                                                        'constraints'=>[new NotBlank(),new Length(['min'=>4,'max'=>50])]
                                                         ])
             ->add('apellidos',TextType::class,['attr'=>['placeholder'=>'apellidos'],
-                                                        'required'=>true,
                                                         'constraints'=>[new Length(['min'=>6,'max'=>50]),new NotBlank()]
                                                         ])
             ->add('movil',NumberType::class,['attr'=>['placeholder'=>'tel.'],

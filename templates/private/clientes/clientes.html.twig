@@ -36,8 +36,8 @@
                             </button>
                             <div class="dropdown-menu show"
                                  x-placement="bottom-start">
-                                <li class="dropdown-item btn" onclick="loadTarget('{{ path('clientes.create.natural') }}',$('#clientesCard'))">Cliente natural</li>
-                                <li class="dropdown-item btn" onclick="loadTarget('{{ path('clientes.create.empresarial') }}',$('#clientesCard'))" >Cliente empresarial</li>
+                                <li class="dropdown-item btn" onclick="loadTarget('{{ path('clientes.create.natural') }}',$('#mainCard'))">Cliente natural</li>
+                                <li class="dropdown-item btn" onclick="loadTarget('{{ path('clientes.create.empresarial') }}',$('#mainCard'))" >Cliente empresarial</li>
                             </div>
                         </div>
 {#                        <button type="button"#}
@@ -63,20 +63,20 @@
                             {% for pvt in list %}
                                 <tr>
                                     <td>{{ pvt.id }}</td>
-                                    <td>{{ pvt.nombres }}</td>
-                                    <td>{{ pvt.fijo }}</td>
+                                    <td>{{ pvt.nombres }} {{ pvt.apellidos }} </td>
+                                    <td>{{ pvt.movil }}</td>
                                     <td width="100">
                                         <button type="button"
                                                 title="editar"
-                                                onclick=""
+                                                onclick="loadTarget('{{ path('clientes.edit',{'id':pvt.id}) }}',$('#mainCard'))"
                                                 class="btn btn-sm btn-info">
                                             <i class="icon-edit"></i>
                                         </button>
                                         <button type="button"
                                                 title="Ajuste"
-                                                onclick=""
-                                                class="btn btn-sm btn-primary">
-                                            <i class="icon-cog2"></i>
+                                                onclick="loadTarget('{{ path('clientes.delete',{'id':pvt.id}) }}',$('#mainCard'))"
+                                                class="btn btn-sm btn-danger">
+                                            <i class="icon-trash2"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="card-body collapse in">
-                    <div class="card-block" id="clientesCard">
+                    <div class="card-block" id="mainCard">
 
                     </div>
                 </div>

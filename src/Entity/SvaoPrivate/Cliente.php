@@ -3,12 +3,13 @@
 namespace App\Entity\SvaoPrivate;
 
 use App\Repository\SvaoPrivate\ClienteRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ClienteRepository::class)
  * @ORM\Table(name="clientes")
+ * @UniqueEntity("nombres")
  */
 class Cliente
 {
@@ -16,11 +17,11 @@ class Cliente
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
 
     /**
-     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255,name="nombres")
      */
     private $nombres;
@@ -41,7 +42,6 @@ class Cliente
     private $fijo;
 
     /**
-     * @Assert\NotBlank
      * @ORM\Column(type="integer", nullable=true,name="tel_movil")
      */
     private $movil;

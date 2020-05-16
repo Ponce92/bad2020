@@ -4,14 +4,8 @@ namespace App\Controller\SvaoProtected;
 
 use App\Form\SvaoProtected\RolType;
 use App\Repository\RolRepository;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\NumberColumn;
-use Omines\DataTablesBundle\Column\TextColumn;
 
-use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Rol;
@@ -58,8 +52,14 @@ class RolController extends AbstractController
     public function store(Request $request){
         $entityManager = $this->getDoctrine()->getManager();
         $rol=new Rol();
-        $form=$this->createForm(RolType::class,$rol);
+
+        $form=$this->createForm(RolType::class,$rol,[
+            'action'=>$this->generateUrl('roles.store'),
+            'method'=>'POST',
+        ]);
+
         $form->handleRequest($request);
+
         if($form->isValid()){
             $rol=$form->getData();
             try {
@@ -102,7 +102,6 @@ class RolController extends AbstractController
                                     'method'=>'PUT',
                                 ]);
 
-        //Renderizamos el form para enviarlo . . .
         $view=$this->renderView('protected/rol/edit.html.twig',[
                                     'form'=>$form->createView(),
                                     'id'=>$id,
@@ -116,47 +115,97 @@ class RolController extends AbstractController
     /**
      * @Route("svao/protected/roles/update/{id}",name="roles.update",methods={"PUT"})
      */
-    public function update(Request $request,$id){
+    public function update(Request $request, int $id){
         $entityManager = $this->getDoctrine()->getManager();
         $rol=$entityManager->getRepository(Rol::class)->find($id);
-        return $rol;
 
-        $form=$this->createForm(RolType::class,New Rol());
+        $form=$this->createForm(RolType::class,$rol,[
+                'action'=>$this->generateUrl('roles.update',['id'=>$id]),
+                'method'=>'PUT'
+            ]);
+
         $form->handleRequest($request);
+
         if($form->isValid()){
-            $rol=$form->getData();
             try {
-                $entityManager->persist($rol);
+                $rol=$form->getData();
                 $entityManager->flush();
 
             }catch (Exception $e){
-                //..
+
+                $status='transaccion_error';
             }
             $rol2=new Rol();
-            $form=$this->createForm(RolType::class,$rol2);
+            $newForm=$this->createForm(RolType::class,$rol2,[
+                    'action'=>$this->generateUrl('roles.store'),
+                    'method'=>'POST'
+                    ]);
+
             $status="success";
             $view=$this->renderView('protected/rol/create.html.twig',[
-                'form'=>$form->createView(),
-            ]);
+                    'form'=>$newForm->createView(),
+                    ]);
         }else{
             $status="form_erors";
-            $view=$this->renderView('protected/rol/create.html.twig',[
-                'form'=>$form->createView(),
-            ]);
+            $view=$this->renderView('protected/rol/edit.html.twig',[
+                    'form'=>$form->createView(),
+                    'id'=>$id,
+                    ]);
         }
+
         return $this->json([
             'status'=>$status,
             'html'=>$view,
         ]);
+    }
 
-//        //Renderizamos el form para enviarlo . . .
-//        $view=$this->renderView('protected/rol/create.html.twig',[
-//            'form'=>$form->createView(),
-//        ]);
-//
-//        return $this->json([
-//            'status'=>'success',
-//            'html'=>$view
-//        ]);
+    /**
+     * @Route("svao/protected/roles/delete/{id}",name="svao.roles.delete",methods={"GET"})
+     */
+    public function delete(int $id)
+    {
+        $rol = $this->getDoctrine()
+            ->getRepository(Rol::class)
+            ->find($id);
+
+
+        $view=$this->renderView('protected/rol/delete.html.twig',[
+            'rol'=>$rol,
+        ]);
+
+        return $this->json([
+            'status'=>'success',
+            'html'=>$view
+        ]);
+
+    }
+
+    /**
+     * @Route("svao/protected/roles/destroy/{id}",name="svao.roles.destroy",methods={"GET"})
+     */
+    public function destroy(int $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $rol = $this->getDoctrine()
+            ->getRepository(Rol::class)
+            ->find($id);
+
+
+        try {
+            $entityManager->remove($rol);
+            $entityManager->flush();
+
+            $view="";
+            $status='reload';
+
+        }catch (\Exception $e){
+            $view='El rol posee dependencias, elimine objetos relacionados e intente de nuevo';
+            $status='aborted';
+        }
+
+        return $this->json([
+            'status'=>$status,
+            'html'=>$view
+        ]);
     }
 }

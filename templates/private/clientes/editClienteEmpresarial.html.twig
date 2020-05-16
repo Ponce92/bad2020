@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
         {{ form_start(form,{'attr':{  'class':'form',
-            'data-url': path('clientes.store.empresarial'),
-            'id':'createFormTop'}}) }}
+            'data-url': path('clientes.empresarial.update',{'id':id}),
+            'id':'updateForm'}}) }}
         {{ form_row(form._token) }}
         <div class="form-body">
             <div class="row">
@@ -86,7 +86,7 @@
 
             <div class="form-actions right">
                 <button type="button"
-                        onclick="loadCardPostAjax($('#createFormTop'),$('#mainCard'))"
+                        onclick="loadCardPostAjax($('#updateForm'),$('#mainCard'))"
                         class="btn btn-success">
                     <i class="icon-plus"></i> Guardar
                 </button>

@@ -4,9 +4,12 @@ namespace App\Entity\SvaoPrivate;
 
 use App\Repository\SvaoPrivate\AerolineaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=AerolineasRepository::class)
+ * @ORM\Entity(repositoryClass=AerolineaRepository::class)
+ * @ORM\Table(name="aerolinea")
+ * @UniqueEntity("codigo")
  */
 class Aerolinea
 {
@@ -18,7 +21,7 @@ class Aerolinea
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=6,name="codigo_linea")
+     * @ORM\Column(type="string", length=6,name="codigo")
      */
     private $codigo;
 

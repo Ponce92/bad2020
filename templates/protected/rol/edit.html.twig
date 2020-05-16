@@ -1,7 +1,10 @@
 {{ form_start(form,{'attr':{'class':'form'                              ,
                             'data-url': path('roles.update',{'id':id}) ,
                             'id':'editRolForm'}}) }}
-{{ form_widget(form.id) }}
+    {{ form_row(form._token) }}
+<div class="row">
+    {{ form_errors(form) }}
+</div>
 <div class="form-body">
     <div class="row">
         <div class="col-md-12">
@@ -32,12 +35,12 @@
             <i class="icon-close"></i> Cancelar
         </button>
         <button type="button"
-                onclick="loadCardPostAjax($('#editRolForm'),$('#createRolForm'))"
+                onclick="loadCardPostAjax($('#editRolForm'),$('#rol_crd'))"
                 class="btn btn-success">
             <i class="icon-plus"></i> Guardar
         </button>
     </div>
 
 </div>
-    {{ form_row(form._token) }}
+
 {{ form_end(form) }}

@@ -1,0 +1,77 @@
+
+{{ form_start(form,{'attr':{  'class':'form',
+    'data-url': path('aeropuertos.store'),
+    'id':'createForm'}}) }}
+    {{ form_row(form._token) }}
+<div class="row">
+    <div class="col-md-3">
+        <label for="nombre">Codigo :</label>
+        <div class="form-group">
+            {{ form_widget(form.codigo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.codigo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <label for="nombre">Nombre del aeropuerto :</label>
+        <div class="form-group">
+            {{ form_widget(form.nombre) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.nombre) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <label for="nombre">Bahias :</label>
+        <div class="form-group">
+            {{ form_widget(form.bahias) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.bahias) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <label for="nombre">Ciudad  :</label>
+        <div class="form-group">
+            {{ form_widget(form.ciudad) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.ciudad) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label for="nombre">Encargados :</label>
+        <div class="form-group">
+            {{ form_widget(form.encargado) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.encargado) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <label for="nombre">Telefono  :</label>
+        <div class="form-group">
+            {{ form_widget(form.telefono) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.telefono) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-actions right">
+    <button type="button"
+            onclick="loadCardPostAjax($('#createForm'),$('#mainCard'))"
+            class="btn btn-success">
+        <i class="icon-plus"></i> Guardar
+    </button>
+</div>
+
+{{ form_end(form) }}
+

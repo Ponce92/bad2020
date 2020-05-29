@@ -1,7 +1,6 @@
 
 {{ form_start(form,{'attr':{  'class':'form',
-    'data-url': path('aeropuertos.store'),
-    'id':'createForm'}}) }}
+    'id':'form'}}) }}
     {{ form_row(form._token) }}
 <div class="row">
     <div class="col-md-3">
@@ -34,6 +33,27 @@
         </div>
     </div>
     <div class="col-md-9">
+        <label for="nombre">Encargados :</label>
+        <div class="form-group">
+            {{ form_widget(form.encargado) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.encargado) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="nombre">Pais  :</label>
+        <div class="form-group">
+            {{ form_widget(form.pais) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.pais) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
         <label for="nombre">Ciudad  :</label>
         <div class="form-group">
             {{ form_widget(form.ciudad) }}
@@ -45,15 +65,6 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <label for="nombre">Encargados :</label>
-        <div class="form-group">
-            {{ form_widget(form.encargado) }}
-            <div class=" invalid-feedback text-danger">
-                {{ form_errors(form.encargado) }}
-            </div>
-        </div>
-    </div>
     <div class="col-md-12">
         <label for="nombre">Telefono  :</label>
         <div class="form-group">
@@ -67,9 +78,15 @@
 
 <div class="form-actions right">
     <button type="button"
-            onclick="loadCardPostAjax($('#createForm'),$('#mainCard'))"
+            onclick="$('#mainCard').html('')"
+            class="btn btn-grey">
+
+        <i class="icon-close"></i> Cancelar
+    </button>
+    <button type="button"
+            onclick="$('#form').submit()"
             class="btn btn-success">
-        <i class="icon-plus"></i> Guardar
+        <i class="icon-save"></i> Guardar
     </button>
 </div>
 

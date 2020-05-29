@@ -1,0 +1,32 @@
+textarea{
+    resize: none;
+}
+
+table.sget tbody tr:nth-of-type(odd){
+    background-color:   rgba(245,247,250,1);
+}
+table.sget tbody tr td{
+    padding-bottom: 3px !important;
+    padding-top: 3px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    vertical-align: middle;
+}
+table.sget{
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius:10px ;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+}
+
+table.sget tbody  tr:hover{
+    background-color:   rgba(49,165,248,.2);
+}
+
+textarea{
+    resize: none;
+}
+
+.upper{
+    text-transform: uppercase;
+}

@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AerolineaRepository::class)
- * @ORM\Table(name="aerolinea")
+ * @ORM\Table(name="aerolineas")
  * @UniqueEntity("codigo")
  */
 class Aerolinea
@@ -54,6 +54,12 @@ class Aerolinea
      * @ORM\Column(type="date",name="fecha_fundacion")
      */
     private $fechaFundacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Pais")
+     * @ORM\JoinColumn(nullable=false,name="pais_id")
+     */
+    private $pais;
 
     public function getId(): ?int
     {
@@ -140,6 +146,18 @@ class Aerolinea
     public function setFechaFundacion(\DateTimeInterface $fechaFundacion): self
     {
         $this->fechaFundacion = $fechaFundacion;
+
+        return $this;
+    }
+
+    public function getPais(): ?Pais
+    {
+        return $this->pais;
+    }
+
+    public function setPais(?Pais $pais): self
+    {
+        $this->pais = $pais;
 
         return $this;
     }

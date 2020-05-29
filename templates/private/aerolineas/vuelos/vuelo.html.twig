@@ -1,0 +1,114 @@
+
+{{ form_start(form,{'attr':{  'class':'form','id':'createForm'}}) }}
+    {{ form_row(form._token) }}
+<div class="row">
+    <div class="col-md-3">
+        <label for="nombre">Codigo :</label>
+        <div class="form-group">
+            {{ form_widget(form.codigo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.codigo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <label for="nombre">Aerolinea :</label>
+        <div class="form-group">
+            <input type="text" class="form-control" readonly value="{{ aerolinea.nombre }}">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <label for="nombre">Origen :</label>
+        <div class="form-group">
+            {{ form_widget(form.origen) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.origen) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="nombre">Destino :</label>
+        <div class="form-group">
+            {{ form_widget(form.destino) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.destino) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <label for="nombre">Costo de viaje :</label>
+        <div class="form-group">
+            {{ form_widget(form.costoViaje) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.costoViaje) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label for="nombre">Millas vuelo :</label>
+        <div class="form-group">
+            {{ form_widget(form.millasReal) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.millasReal) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label for="nombre">Tiempo vuelo :</label>
+        <div class="form-group">
+            {{ form_widget(form.tiempoVuelo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.tiempoVuelo) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <label for="nombre">Precio vuelo :</label>
+        <div class="form-group">
+            {{ form_widget(form.precio) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.precio) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label for="nombre">Millas cliente :</label>
+        <div class="form-group">
+            {{ form_widget(form.millasAsignables) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.millasAsignables) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="form-actions right">
+        <button type="button"
+                onclick="$('#mainCard').html('');"
+                class="btn btn-blue-grey">
+            <i class="icon-close"></i> Cancelar
+        </button>
+
+        {% if delete is defined %}
+            <button type="submit"
+                    class="btn btn-danger">
+                <i class="icon-trash2"></i> Eliminar
+            </button>
+        {% else %}
+        <button type="submit"
+                class="btn btn-success">
+            <i class="icon-plus"></i> Guardar
+        </button>
+        {% endif %}
+    </div>
+
+{{ form_end(form) }}
+

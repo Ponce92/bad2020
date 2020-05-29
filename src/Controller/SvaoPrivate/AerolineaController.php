@@ -25,11 +25,11 @@ class AerolineaController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/svao/private/aeroliena/create",name="aerolineas.create",methods={"GET",})
      */
     public function create(Request $request){
+
 
         $form=$this->createForm(AerolineaType::class,
                                     new Aerolinea(),
@@ -48,6 +48,7 @@ class AerolineaController extends AbstractController
         ]);
 
     }
+
     /**
      * @Route("svao/private/aerolinea/store",name="aerolineas.store",methods={"POST",})
      */
@@ -85,7 +86,6 @@ class AerolineaController extends AbstractController
             ]);
 
         }else{
-
             $status="form_errors";
             $view=$this->renderView('private/aerolineas/create.html.twig',[
                 'form'=>$form->createView(),
@@ -120,5 +120,7 @@ class AerolineaController extends AbstractController
     public function delete(){
 
     }
+
+
 
 }

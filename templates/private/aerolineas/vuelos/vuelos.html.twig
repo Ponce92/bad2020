@@ -9,9 +9,14 @@
                             <li class="breadcrumb-item">
                                 <a href="{{ path('homesvao') }}">svao</a>
                             </li>
-                            <li class="breadcrumb-item">private
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('aerolineas.index') }}">Aerolineas</a>
                             </li>
-                            <li class="breadcrumb-item">Catalogo lineas aereas
+                            <li class="breadcrumb-item">
+                                {{ aerolinea.nombre }}
+                            </li>
+                            <li class="breadcrumb-item">
+                                Vuelos
                             </li>
                         </ol>
                     </div>
@@ -26,13 +31,13 @@
         <div class="col-md-8 col-sm-12" >
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Lineas aereas</h4>
+                    <h4 class="card-title">:: Vuelos de {{ aerolinea.nombre }}</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
 
                         <button type="button"
                                 id="btn-create"
-                                onclick="loadTarget('{{ path('aerolineas.create') }}',$('#mainCard'))"
+                                onclick="loadTarget('{{ path('vuelos.create',{'aerolinea':aerolinea.id}) }}',$('#mainCard'))"
                                 class="btn btn-success">
                             <i class="icon-plus"  style="color: white;"></i> Agregar
                         </button>
@@ -44,9 +49,11 @@
                             <thead>
                             <tr>
                                 <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Encargado</th>
-                                <th>Pais origen</th>
+                                <th>Ciudad origen</th>
+                                <th>Ciudad destino</th>
+                                <th>Costo</th>
+                                <th>Millas vuelo</th>
+                                <th>Tiempo</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -54,25 +61,25 @@
                             {% for pvt in list %}
                                 <tr>
                                     <td width="40" align="middle">{{ pvt.codigo }} </td>
-                                    <td>{{ pvt.nombre }}</td>
-                                    <td>{{ pvt.nombreEncargado }}</td>
-                                    <td>{{ pvt.pais.nombre }}</td>
+                                    <td>{{ pvt.origen.nombre }}</td>
+                                    <td>{{ pvt.destino.nombre }}</td>
+                                    <td>$ {{ pvt.costoViaje }} </td>
+                                    <td>{{ pvt.millasReal }} millas</td>
+                                    <td>{{ pvt.tiempoVuelo }} horas</td>
                                     <td>
                                         <center>
-                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar aviones"
-                                                        class="btn btn-sm btn-info">
-                                                    <i class="icon-flight"></i>
-                                                </button>
-                                            </a>
-                                            <a href="{{ path('vuelos.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar vuelos"
-                                                        class="btn btn-sm btn-primary">
-                                                    <i class="icon-location"></i>
-                                                </button>
-                                            </a>
+                                            <button type="button"
+                                                    title="Editar vuelos"
+                                                    onclick="loadTarget('{{ path('vuelos.edit',{'vuelo':pvt.id}) }}',$('#mainCard'))"
+                                                    class="btn btn-sm btn-info">
+                                                <i class="icon-edit2"></i>
+                                            </button>
+                                            <button type="button"
+                                                    title="Eliminar velo"
+                                                    onclick="loadTarget('{{ path('vuelos.delete',{'vuelo':pvt.id}) }}',$('#mainCard'))"
+                                                    class="btn btn-sm btn-danger">
+                                                <i class="icon-trash2"></i>
+                                            </button>
                                         </center>
                                     </td>
                                 </tr>
@@ -87,7 +94,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Aerolinea</h4>
+                    <h4 class="card-title">:: Vuelo</h4>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
@@ -97,7 +104,9 @@
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block" id="mainCard">
-
+                        {% if form is defined %}
+                           {{ form|raw }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

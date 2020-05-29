@@ -3,6 +3,8 @@
 namespace App\Form\SvaoPrivate;
 
 use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Pais;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -37,7 +39,12 @@ class AerolineaType extends AbstractType
                 'constraints'=>[new NotBlank()]])
             ->add('fechaFundacion',DateType::class,['attr'=>['placeholder'=>'dd/mm/yyyy'],
                 'constraints'=>[new NotBlank()]])
-        ;
+            ->add('pais',EntityType::class,[
+                        'class'=>Pais::class,
+                        'placeholder'=>'Seleccione pais',
+                        'choice_label'=>'nombre',
+                        'constraints'=>[new NotBlank()]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

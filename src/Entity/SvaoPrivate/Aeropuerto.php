@@ -47,14 +47,18 @@ class Aeropuerto
     private $bahias;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true,name="ciudad")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Pais")
+     * @ORM\JoinColumn(nullable=false,name="pais_id")
+     */
+    private $pais;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Ciudad")
+     * @ORM\JoinColumn(nullable=false,name="cuidad_id")
      */
     private $ciudad;
 
-    /**
-     * @ORM\Column(type="integer",name="codigo_pais")
-     */
-    private $pais;
+
 
     public function getId(): ?int
     {
@@ -78,7 +82,7 @@ class Aeropuerto
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): self
+    public function setNombre(?string $nombre): self
     {
         $this->nombre = $nombre;
 
@@ -90,7 +94,7 @@ class Aeropuerto
         return $this->telefono;
     }
 
-    public function setTelefono(int $telefono): self
+    public function setTelefono(?int $telefono): self
     {
         $this->telefono = $telefono;
 
@@ -102,7 +106,7 @@ class Aeropuerto
         return $this->encargado;
     }
 
-    public function setEncargado(string $encargado): self
+    public function setEncargado(?string $encargado): self
     {
         $this->encargado = $encargado;
 
@@ -114,34 +118,35 @@ class Aeropuerto
         return $this->bahias;
     }
 
-    public function setBahias(int $bahias): self
+    public function setBahias(?int $bahias): self
     {
         $this->bahias = $bahias;
 
         return $this;
     }
 
-    public function getCiudad(): ?string
+    public function getPais(): ?Pais
+    {
+        return $this->pais;
+    }
+
+    public function setPais(?Pais $pais): self
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function getCiudad(): ?Ciudad
     {
         return $this->ciudad;
     }
 
-    public function setCiudad(?string $ciudad): self
+    public function setCiudad(?Ciudad $ciudad): self
     {
         $this->ciudad = $ciudad;
 
         return $this;
     }
 
-    public function getPais(): ?int
-    {
-        return $this->pais;
-    }
-
-    public function setPais(int $pais): self
-    {
-        $this->pais = $pais;
-
-        return $this;
-    }
 }

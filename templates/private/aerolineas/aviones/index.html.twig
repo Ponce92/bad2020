@@ -11,7 +11,14 @@
                             </li>
                             <li class="breadcrumb-item">private
                             </li>
-                            <li class="breadcrumb-item">Catalogo lineas aereas
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('aerolineas.index') }}">Aerolineas</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                {{ aerolinea.nombre }}
+                            </li>
+                            <li class="breadcrumb-item">
+                                Aviones de linea
                             </li>
                         </ol>
                     </div>
@@ -26,13 +33,13 @@
         <div class="col-md-8 col-sm-12" >
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Lineas aereas</h4>
+                    <h4 class="card-title">:: Aviones de {{ aerolinea.nombre }}</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
 
                         <button type="button"
                                 id="btn-create"
-                                onclick="loadTarget('{{ path('aerolineas.create') }}',$('#mainCard'))"
+                                onclick="loadTarget('{{ path('aviones.create',{'aerolinea':aerolinea.id}) }}',$('#mainCard'))"
                                 class="btn btn-success">
                             <i class="icon-plus"  style="color: white;"></i> Agregar
                         </button>
@@ -44,35 +51,42 @@
                             <thead>
                             <tr>
                                 <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Encargado</th>
-                                <th>Pais origen</th>
-                                <th>Acciones</th>
+                                <th>Tipo Avion</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Capacidad</th>
+                                <th>Accion</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for pvt in list %}
                                 <tr>
                                     <td width="40" align="middle">{{ pvt.codigo }} </td>
-                                    <td>{{ pvt.nombre }}</td>
-                                    <td>{{ pvt.nombreEncargado }}</td>
-                                    <td>{{ pvt.pais.nombre }}</td>
+                                    <td>{{ pvt.tipo.nombre }}</td>
+                                    <td>{{ pvt.marca.nombre }}</td>
+                                    <td>{{ pvt.modelo.nombre }}</td>
+                                    <td>{{ pvt.capacidad }}</td>
                                     <td>
                                         <center>
-                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar aviones"
-                                                        class="btn btn-sm btn-info">
-                                                    <i class="icon-flight"></i>
-                                                </button>
-                                            </a>
-                                            <a href="{{ path('vuelos.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar vuelos"
-                                                        class="btn btn-sm btn-primary">
-                                                    <i class="icon-location"></i>
-                                                </button>
-                                            </a>
+                                            <button type="button"
+                                                    title="Ajustes de asientos"
+
+                                                    class="btn btn-sm btn-primary">
+                                                <i class="icon-cogs2"></i>
+                                            </button>
+                                            <button type="button"
+                                                    title="Editar avion"
+                                                    onclick="loadTarget('{{ path('aviones.edit',{'avion':pvt.id}) }}',$('#mainCard'))"
+                                                    class="btn btn-sm btn-info">
+                                                <i class="icon-edit2"></i>
+                                            </button>
+                                            <button type="button"
+                                                    onclick="loadTarget('{{ path('aviones.delete',{'avion':pvt.id}) }}',$('#mainCard'))"
+                                                    title="Eliminar avion"
+                                                    class="btn btn-sm btn-danger">
+                                                <i class="icon-trash2"></i>
+                                            </button>
+
                                         </center>
                                     </td>
                                 </tr>
@@ -87,7 +101,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">:: Aerolinea</h4>
+                    <h4 class="card-title">:: Avion de linea</h4>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
@@ -97,54 +111,14 @@
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block" id="mainCard">
-
+                        {% if form is defined %}
+                            {% include 'private/aerolineas/aviones/avion.html.twig' %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    {# ==================================================================================================   #}
-
-
-    <style type="text/css">
-        textarea{
-            resize: none;
-        }
-        .h400{
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-
-        table.sget tbody tr:nth-of-type(odd){
-            background-color:   rgba(245,247,250,1);
-        }
-        table.sget tbody tr td{
-            padding-bottom: 3px !important;
-            padding-top: 3px !important;
-            padding-left: 8px !important;
-            padding-right: 8px !important;
-            vertical-align: middle;
-        }
-        table.sget{
-            -webkit-border-top-left-radius: 10px;
-            -webkit-border-top-right-radius:10px ;
-            -moz-border-radius-topleft: 10px;
-            -moz-border-radius-topright: 10px;
-        }
-
-        table.sget tbody  tr:hover{
-            background-color:   rgba(49,165,248,.2);
-        }
-
-        textarea{
-            resize: none;
-        }
-    </style>
-
 {% endblock %}
 
  {% block js %}

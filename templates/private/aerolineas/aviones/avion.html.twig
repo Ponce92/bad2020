@@ -1,0 +1,83 @@
+
+{{ form_start(form,{'attr':{  'class':'form','id':'createForm'}}) }}
+    {{ form_row(form._token) }}
+<div class="row">
+    <div class="col-md-3">
+        <label for="nombre">Codigo :</label>
+        <div class="form-group">
+            {{ form_widget(form.codigo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.codigo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <label for="nombre">Aerolinea :</label>
+        <div class="form-group">
+            <input type="text" class="form-control" readonly value="{{ aerolinea.nombre }}">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <label for="nombre">Tipo avion :</label>
+        <div class="form-group">
+            {{ form_widget(form.tipo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.tipo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="nombre">Marca avion :</label>
+        <div class="form-group">
+            {{ form_widget(form.marca) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.marca) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="nombre">Modelo avion:</label>
+        <div class="form-group">
+            {{ form_widget(form.modelo) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.modelo) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="nombre">Capacidad :</label>
+        <div class="form-group">
+            {{ form_widget(form.capacidad) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.capacidad) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="form-actions right">
+        <button type="button"
+                onclick="$('#mainCard').html('');"
+                class="btn btn-blue-grey">
+            <i class="icon-close"></i> Cancelar
+        </button>
+        {% if delete is defined %}
+            <button type="submit"
+                    class="btn btn-danger">
+                <i class="icon-trash2"></i> Eliminar
+            </button>
+        {% else %}
+            <button type="submit"
+                    class="btn btn-success">
+                <i class="icon-plus"></i> Guardar
+            </button>
+        {% endif %}
+    </div>
+
+{{ form_end(form) }}
+

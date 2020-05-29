@@ -25,6 +25,17 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+        <label for="nombre">Pais de origen :</label>
+        <div class="form-group">
+            {{ form_widget(form.pais) }}
+            <div class=" invalid-feedback text-danger">
+                {{ form_errors(form.pais) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <label for="nombre">Nombre corto :</label>
         <div class="form-group">
             {{ form_widget(form.nombreCorto) }}

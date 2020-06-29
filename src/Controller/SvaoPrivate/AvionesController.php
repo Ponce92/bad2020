@@ -8,15 +8,21 @@ use App\Form\SvaoPrivate\AvionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AvionesController extends AbstractController
 {
     /**
-     * @Route("/svao/private/aerolinea/{aerolinea}/aviones", name="aviones.index")
-     * @param Aerolinea $aerolinea
+     * @Route("/svao/private/aerolinea/aviones", name="aviones.index")
      */
-    public function index(Aerolinea $aerolinea)
+    public function index(Request $request, UserInterface $user)
     {
+        $aeId=$user->getAerolinea();
+        if($aeId==null){
+            $this->addFlash('danger','No puedes acceder a la url, no tienes asignado una aerolinea.');
+            return $this->redirectToRoute('homesvao');
+        }
+        $aerolinea=$this->getDoctrine()->getRepository(Aerolinea::class)->find($aeId);
         $list=$this->getDoctrine()
                 ->getRepository(Avion::class)
                 ->findBy(
@@ -73,6 +79,7 @@ class AvionesController extends AbstractController
         {
             $obj=$form->getData();
             $obj->setCodigo(bin2hex(random_bytes(5 )));
+            $obj->setEstado(true);
             $obj->setAerolinea($aerolinea);
 
             try{

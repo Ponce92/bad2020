@@ -1,0 +1,149 @@
+{% extends 'layout/layout.html.twig' %}
+    {% block header_links %}
+        <div class="col col-md-12">
+            <div class="content-header-right breadcrumb-new" style="padding-left: 15px;padding-bottom: 10px;">
+                <div class="row breadcrumbs-top d-inline-block">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('homesvao') }}">svao</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('vuelos.reservas') }}">vuelos</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                Reservar
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% block body %}
+
+    {# ==================================================================================================   #}
+    <div class="row match-height">
+        <div class="col-md-6" >
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><i class="icon-map"> </i>Descripcion</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <table class="table table-borderless table-striped" width="100%" style="font-weight: bold;">
+                            <tbody>
+                                <tr>
+                                    <td colspan="4"> Aerolinea :</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">{{ horario.aerolinea.nombre }}</td>
+                                    <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Orgien :</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">{{ horario.vuelo.origen.ciudad.nombre }}</td>
+                                    <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Destino :</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">{{ horario.vuelo.destino.ciudad.nombre }}</td>
+                                    <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Fecha de viaje :</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">{{ horario.fecha|date('d/m/Y') }} {{ horario.hora|date('H:m') }}</td>
+                                    <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Millas asignables :</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">{{ horario.vuelo.millasAsignables }} Millas vuelo</td>
+                                    <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Tiempo de vuelo :</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">{{ horario.vuelo.tiempoVuelo }} Horas</td>
+                                    <td colspan="1"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" >
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><i class="icon-send-o"> </i>Reservar </h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <form method="POST" action="{{ path('vuelos.reservas.store') }}">
+                            <input type="hidden" id="horarioId" name="horarioId" value="{{ horario.id }}">
+                            <div class="row">
+                                <h4>Obten tus millas de vuelo reservando tu vuelo ahora.</h4>
+                            </div>
+                            <div class="row">
+                                <br>
+                                <div class="col-md-6">
+                                    <label for="pot">Forma de pago : </label>
+                                    <select name="opt"
+                                            class="form-control"
+                                            id="">
+                                        <option value="asdf">Seleccione tipo de pago</option>
+                                        <option value="asdf">Tarjeta de credito</option>
+                                        <option value="asdf">Tarjeta de debito</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pot">Asiento : </label>
+                                    <select name="opt"
+                                            class="form-control"
+                                            id="">
+                                        <option value="asdf">Clase de asiento</option>
+                                        <option value="asdf">Prime clase</option>
+                                        <option value="asdf">Segunda clase</option>
+                                        <option value="asdf">Economica</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 offset-sm-4">
+                                    <br>
+                                    <label for="as">Monto ($ ):</label>
+                                    <input type="text"
+                                           name="monto"
+                                           id="monto"
+                                           class="form-control"
+                                           readonly
+                                           required
+                                           value="{{ horario.vuelo.precio }}">
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="icon-send"></i> Reservar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {# ==================================================================================================   #}
+
+{% endblock %}
+
+ {% block js %}
+     <script src="{{ asset('utils/functions.js') }} " type="text/javascript"></script>
+ {% endblock %}

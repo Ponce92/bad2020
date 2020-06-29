@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Rol;
+use App\Entity\SvaoProtected\Permiso;
 
 class RolController extends AbstractController
 {
@@ -164,6 +165,7 @@ class RolController extends AbstractController
      */
     public function delete(int $id)
     {
+
         $rol = $this->getDoctrine()
             ->getRepository(Rol::class)
             ->find($id);
@@ -207,5 +209,55 @@ class RolController extends AbstractController
             'status'=>$status,
             'html'=>$view
         ]);
+    }
+
+//    ============================== Permisos de los roles +===================================
+
+    /**
+     * @Route("svao/protected/roles/{rol}/permisos/all",name="svao.roles.permisos",methods={"GET"})
+     */
+    public function roles(Rol $rol)
+    {
+        $list=$this->getDoctrine()->getRepository(Permiso::class)->findAll();
+        $cat=$this->getDoctrine()->getRepository(Permiso::class)->findGroupsBy();
+
+        $view=$this->renderView('protected/rol/permiso.html.twig',[
+            'rol'=>$rol,
+            'list'=>$list,
+            'groups'=>$cat
+        ]);
+        return $this->json([
+            'status'=>'success',
+            'html'=>$view
+        ]);
+
+    }
+
+    /**
+     * @Route("svao/protected/roles/{rol}/permisos/all",name="svao.roles.permisions.update",methods={"POST"})
+     */
+    public function updatePermissinos(Rol $rol, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        //Revocamos toodos los permisos.
+        $all=$entityManager->getRepository(Permiso::class)->findAll();
+        foreach ($all as $pvt){
+            $rol->removePermiso($pvt);
+        }
+        $entityManager->flush();
+        $this->addFlash('success','Rol actualizado correctamente');
+
+        //Agregamos todos los pemrisos
+        if($request->get('permissions')){
+            $permisos=$request->get('permissions');
+            $cuenta=count($permisos);
+
+            for ($i=0;$i<$cuenta;$i++)
+            {
+                $rol->addPermiso($entityManager->find(Permiso::class,$permisos[$i]));
+            }
+            $entityManager->flush();
+        }
+        return $this->redirect($this->generateUrl('index_rol'));
     }
 }

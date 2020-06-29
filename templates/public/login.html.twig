@@ -37,7 +37,7 @@
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
 <!-- ////////////////////////////////////////////////////////////////////////////-->
-<div class="app-content content container-fluid">
+<div class="app-content content container-fluid" style="background-color: rgb(230,230,230)">
     <div class="content-wrapper">
         <div class="content-header row">
         </div>
@@ -54,39 +54,27 @@
                         </div>
                         <div class="card-body collapse in">
                             <div class="card-block">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        {% if band =="true" %}
-                                            <div class="alert alert-danger alert-dismissible mb-2" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                                <strong>Error ..</strong> Usuario y/o password incorrectos.
-                                            </div>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-
-                                {{ form_start(form,{'attr':{  'class':'form',
-                                    'id':'login'}}) }}
-                                {{ form_row(form._token) }}
+                                <form action="" class="form" method="post">
+                                    {% if error %}
+                                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                    {% endif %}
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                                     <fieldset class="form-group position-relative has-icon-left mb-0">
-                                        {{ form_widget(form.username) }}
-                                        <div class="form-control-position">
-                                            <i class="icon-head"></i>
-                                        </div>
-                                    </fieldset>
-                                <br>
-                                    <fieldset class="form-group position-relative has-icon-left">
-                                        {{ form_widget(form.password) }}
-                                        <div class="form-control-position">
-                                            <i class="icon-key3"></i>
-                                        </div>
-                                    </fieldset>
-                                {{ form_end(form) }}
-
+                                            <input class="form-control" value="{{ last_username }}"  name="username" type="text">
+                                            <div class="form-control-position">
+                                                <i class="icon-head"></i>
+                                            </div>
+                                        </fieldset>
+                                    <br>
+                                        <fieldset class="form-group position-relative has-icon-left">
+                                            <input type="password" class="form-control" name="password" id="password">
+                                            <div class="form-control-position">
+                                                <i class="icon-key3"></i>
+                                            </div>
+                                        </fieldset>
+                                    <button type="submit" class="btn btn-info btn-block"> Login</button>
+                                </form>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -103,7 +91,6 @@
         </div>
     </div>
 </div>
-
 <script src="{{ asset( 'template/app-assets/js/core/libraries/jquery.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset( 'template/app-assets/vendors/js/ui/tether.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset( 'template/app-assets/js/core/libraries/bootstrap.min.js') }}" type="text/javascript"></script>

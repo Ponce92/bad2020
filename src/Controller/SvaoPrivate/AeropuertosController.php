@@ -15,7 +15,7 @@ use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 
 use App\Entity\SvaoPrivate\Aeropuerto;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 class AeropuertosController extends AbstractController
@@ -23,13 +23,22 @@ class AeropuertosController extends AbstractController
     /**
      * @Route("/svao/private/aeropuertos", name="aeropuertos.list")
      */
-    public function index(Request $request,?Form $form)
+    public function index(Request $request,UserInterface $user)
     {
+        if($user->getAeropuerto()==null){
+            $this->addFlash('danger','No puedes acceder a la url, no tienes asignado una aerolinea.');
+            return $this->redirectToRoute('homesvao');
+        }
+        $aeropuerto=$this->getDoctrine()->getRepository(Aeropuerto::class)->find($user->getAeropuerto());
+
         $list=$this->getDoctrine()
             ->getRepository(Aeropuerto::class)
             ->findAll();
 
-        return $this->render('private/aeropuerto/aeropuertos.html.twig',['list'=>$list]);
+        return $this->render('private/aeropuerto/aeropuertos.html.twig',[
+            'list'=>$list,
+            'aeropuerto'=>$aeropuerto
+        ]);
 
     }
 

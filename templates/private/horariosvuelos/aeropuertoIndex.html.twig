@@ -1,0 +1,120 @@
+{% extends 'layout/layout.html.twig' %}
+{% block title  %} Vuelos {% endblock %}
+{% block header_links %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
+    <div class="col col-md-12">
+        <div class="content-header-right breadcrumb-new" style="padding-left: 15px;padding-bottom: 10px;">
+            <div class="row breadcrumbs-top d-inline-block">
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ path('homesvao') }}">svao</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            {{ aeropuerto.nombre }}
+                        </li>
+                         <li class="breadcrumb-item">
+                            Horario de vuelos
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+
+    {# ==================================================================================================   #}
+    <div class="row">
+        <div class="col-md-8 col-sm-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="">:: vuelos programados</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block" id="dtable">
+                        <table class="table table-bordered sget">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Pista asignado</th>
+                                <th>Estado</th>
+                                <th>Accion</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for pvt in list %}
+                                <tr>
+                                    <td width="40" align="middle">{{ pvt.id }} </td>
+                                    <td>{{ pvt.vuelo.origen.nombre }}</td>
+                                    <td>{{ pvt.vuelo.destino.nombre }}</td>
+                                    <td>{{ pvt.fecha|date('Y-m-d') }}</td>
+                                    <td>{{ pvt.hora|date('H:m') }}</td>
+                                    <td>
+                                        {% if pvt.gateway ==null %}
+                                                No asignado
+                                        {% else %}
+                                                {{ pvt.gateway }}
+                                        {% endif %}
+
+                                    </td>
+                                    <td>
+                                        {% if pvt.estadoVuelo =='I' %} Ingresado{% endif %}
+                                        {% if pvt.estadoVuelo =='P' %} En processo{% endif %}
+                                        {% if pvt.estadoVuelo =='C' %} Completado{% endif %}
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <button type="button"
+                                                    onclick="loadTarget('{{ path('horariosv.editv',{'horario':pvt.id}) }}',$('#mainCard'))"
+                                                    title="Ajustar"
+                                                    class="btn btn-sm btn-success">
+                                                <i class="icon-cogs"></i>
+                                            </button>
+
+                                        </center>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">:: Avion de linea</h4>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block" id="mainCard">
+                        {% if form is defined %}
+                            {{ form|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+ {% block js %}
+     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
+     <script src="{{ asset('utils/functions.js') }} " type="text/javascript"></script>
+ {% endblock %}

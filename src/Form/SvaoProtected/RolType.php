@@ -3,6 +3,9 @@
 namespace App\Form\SvaoProtected;
 
 use App\Entity\Rol;
+use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Aeropuerto;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,8 +24,8 @@ class RolType extends AbstractType
                 ])
             ->add('description',TextareaType::class,['attr'=>['placeholder'=>'Descripcion del rol','rows'=>3],
                         'constraints'=>[new NotBlank()]
-                ]);
-
+                ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

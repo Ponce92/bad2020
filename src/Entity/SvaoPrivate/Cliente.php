@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ClienteRepository::class)
  * @ORM\Table(name="clientes")
  * @UniqueEntity("nombres")
+ * @UniqueEntity("movil")
+ * @UniqueEntity("viajeroFrecuente")
  */
 class Cliente
 {
@@ -17,6 +19,7 @@ class Cliente
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\Column(type="documento")
      *
      */
     private $id;
@@ -70,6 +73,21 @@ class Cliente
      * @ORM\Column(type="string", length=50, nullable=true,name="numero_documento")
      */
     private $documento;
+
+    /**
+     * @ORM\Column(type="date", nullable=true,name="fecha_nacimiento")
+     */
+    private $fechaNacimiento;
+
+    /**
+     * @ORM\Column(type="string", length=255,name="viajero_frecuente")
+     */
+    private $viajeroFrecuente;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $genero;
 
     public function getId(): ?int
     {
@@ -192,6 +210,42 @@ class Cliente
     public function setDocumento(?string $documento): self
     {
         $this->documento = $documento;
+
+        return $this;
+    }
+
+    public function getFechaNacimiento(): ?\DateTimeInterface
+    {
+        return $this->fechaNacimiento;
+    }
+
+    public function setFechaNacimiento(?\DateTimeInterface $fechaNacimiento): self
+    {
+        $this->fechaNacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    public function getViajeroFrecuente(): ?string
+    {
+        return $this->viajeroFrecuente;
+    }
+
+    public function setViajeroFrecuente(string $viajeroFrecuente): self
+    {
+        $this->viajeroFrecuente = $viajeroFrecuente;
+
+        return $this;
+    }
+
+    public function getGenero(): ?bool
+    {
+        return $this->genero;
+    }
+
+    public function setGenero(bool $genero): self
+    {
+        $this->genero = $genero;
 
         return $this;
     }

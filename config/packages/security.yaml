@@ -16,6 +16,7 @@ security:
                     - App\Security\AppUserAuthenticator
             logout:
                 path: app_logout
+                target: /
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -28,5 +29,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/svao/home, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/svao/aerolineas, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/svao/vuelos, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/svao/aeropuertos, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/svao/roles, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/svao/usuarios, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/svao/protected, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/profile, roles: ROLE_USER }

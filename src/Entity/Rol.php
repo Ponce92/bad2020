@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\SvaoProtected\Permiso;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -36,6 +39,16 @@ class Rol
      * @ORM\Column(type="string", length=255, nullable=true,name="descripcion")
      */
     private $description;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\SvaoProtected\Permiso")
+     */
+    private $permisos;
+
+    public function __construct()
+    {
+        $this->permisos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,31 @@ class Rol
     {
         $this->description = $description;
 
+        return $this;
+    }
+
+    /**
+     * @return Collection|Permiso[]
+     */
+    public function getPermisos(): Collection
+    {
+        return $this->permisos;
+    }
+
+    public function addPermiso(Permiso $permiso): self
+    {
+        if (!$this->permisos->contains($permiso)) {
+            $this->permisos[] = $permiso;
+        }
+
+        return $this;
+    }
+
+    public function removePermiso(Permiso $permiso): self
+    {
+        if ($this->permisos->contains($permiso)) {
+            $this->permisos->removeElement($permiso);
+        }
         return $this;
     }
 }

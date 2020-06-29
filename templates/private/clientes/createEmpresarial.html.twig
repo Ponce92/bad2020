@@ -1,97 +1,119 @@
-<div class="row">
-    <div class="col-md-12 col-lg-12">
-        {{ form_start(form,{'attr':{  'class':'form',
-            'data-url': path('clientes.store.empresarial'),
-            'id':'createFormTop'}}) }}
-        {{ form_row(form._token) }}
-        <div class="form-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Nombre de empresa :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.nombres) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.nombres) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Persona encargado :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.encargado) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.encargado) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Direccion :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.direccion) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.direccion) }}
-                        </div>
-                    </div>
+{{ form_start(form,{'attr':{  'class':'form'}}) }}
+{{ form_row(form._token) }}
+<div class="form-body">
+    <div class="row">
+        <div class="col-md-12">
+            <label for="name">Nombre de empresa :</label>
+            <div class="form-group">
+                {{ form_widget(form.nombres) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.nombres) }}
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="name">Telefono movil :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.movil) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.movil) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="name">Telefono fijo :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.fijo) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.fijo) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Numero Nit :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.nit) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.nit) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="name">Numero Nic :</label>
-                    <div class="form-group">
-                        {{ form_widget(form.nic) }}
-                        <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.nic) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-actions right">
-                <button type="button"
-                        onclick="loadCardPostAjax($('#createFormTop'),$('#mainCard'))"
-                        class="btn btn-success">
-                    <i class="icon-plus"></i> Guardar
-                </button>
             </div>
         </div>
-        {{ form_end(form) }}
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="name">Persona encargado :</label>
+            <div class="form-group">
+                {{ form_widget(form.encargado) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.encargado) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label for="name">Direccion :</label>
+            <div class="form-group">
+                {{ form_widget(form.direccion) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.direccion) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="name">Telefono movil :</label>
+            <div class="form-group">
+                {{ form_widget(form.movil) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.movil) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="name">Telefono fijo :</label>
+            <div class="form-group">
+                {{ form_widget(form.fijo) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.fijo) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="name">Numero Nit :</label>
+            <div class="form-group">
+                {{ form_widget(form.nit) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.nit) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="name">Numero Nic :</label>
+            <div class="form-group">
+                {{ form_widget(form.nic) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.nic) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <strong>Usuario:</strong>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="name">Correo electronico :</label>
+            <div class="form-group">
+                {{ form_widget(form.email) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.email) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="name">Password :</label>
+            <div class="form-group">
+                {{ form_widget(form.password) }}
+                <div class=" invalid-feedback text-danger">
+                    {{ form_errors(form.password) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+<div class="form-actions right">
+    <a href="{{ path('svao') }}">
+        <button type="button"
+                class="btn btn-blue-grey">
+            <i class="icon-close"></i> Cancelar
+        </button>
+    </a>
+    <button type="submit"
+            class="btn btn-success">
+        <i class="icon-plus"></i> Guardar
+    </button>
+</div>
+{{ form_end(form) }}

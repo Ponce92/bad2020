@@ -17,12 +17,24 @@ use App\Entity\Rol;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/homesvao", name="homesvao")
-     */
-    public function index()
-    {
-        return $this->render('home/index.html.twig', ['band'=>"true"]);
+//    /**
+//     * @Route("/homesvao", name="homesvao")
+//     */
+//    public function index()
+//    {
+//        return $this->render('home/index.html.twig', ['band'=>"true"]);
+//
+//    }
 
-    }
+//    /**
+//     * @Route("/homesvao", name="homesvao")
+//     */
+//    public function login()
+//    {
+//        return $this->render('home/index.html.twig', ['band'=>"true"]);
+//
+//    }
+
+
+
 }

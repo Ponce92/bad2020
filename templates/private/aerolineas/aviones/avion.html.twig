@@ -60,24 +60,24 @@
     </div>
 </div>
 
-    <div class="form-actions right">
-        <button type="button"
-                onclick="$('#mainCard').html('');"
-                class="btn btn-blue-grey">
-            <i class="icon-close"></i> Cancelar
+<div class="form-actions right">
+    <button type="button"
+            onclick="$('#mainCard').html('');"
+            class="btn btn-blue-grey">
+        <i class="icon-close"></i> Cancelar
+    </button>
+    {% if delete is defined %}
+        <button type="submit"
+                class="btn btn-danger">
+            <i class="icon-trash2"></i> Eliminar
         </button>
-        {% if delete is defined %}
-            <button type="submit"
-                    class="btn btn-danger">
-                <i class="icon-trash2"></i> Eliminar
-            </button>
-        {% else %}
-            <button type="submit"
-                    class="btn btn-success">
-                <i class="icon-plus"></i> Guardar
-            </button>
-        {% endif %}
-    </div>
+    {% else %}
+        <button type="submit"
+                class="btn btn-success">
+            <i class="icon-plus"></i> Guardar
+        </button>
+    {% endif %}
+</div>
 
 {{ form_end(form) }}
 

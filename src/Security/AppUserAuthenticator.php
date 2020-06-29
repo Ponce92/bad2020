@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -15,18 +16,24 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppUserAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'home';
+    public const LOGIN_ROUTE = 'login';
 
+    private $entityManager;
+    private $passwordEncoder;
     private $urlGenerator;
     private $csrfTokenManager;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager)
+
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface  $passwordEncoder , UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        $this->entityManager=$entityManager;
+        $this->passwordEncoder=$passwordEncoder;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
     }
@@ -63,9 +70,10 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator
         // You can do this by calling the user provider, or with custom logic here.
         $user = $userProvider->loadUserByUsername($credentials['username']);
 
+
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+            throw new CustomUserMessageAuthenticationException('El usuario no se encontro.');
         }
 
         return $user;
@@ -73,9 +81,13 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
+
         // Check the user's password or other credentials and return true or false
         // If there are no credentials to check, you can just return true
-        return true;
+        if($user->getPassword() == $credentials['password']){
+            return true;
+        }
+        return false;
         throw new \Exception('TODO: check the credentials inside '.__FILE__);
     }
 
@@ -85,7 +97,8 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('bad_login'));
+//        return new RedirectResponse($this->urlGenerator->generate('bad_login'));
+        return new RedirectResponse($this->urlGenerator->generate('index_rol'));
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }

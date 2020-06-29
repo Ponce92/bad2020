@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>  svao :: Inicio</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!-- BEGIN VENDOR CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/bootstrap-extended.min.css') }}">
+
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/fonts/icomoon.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/fonts/feather/style.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/fonts/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/vendors/css/extensions/pace.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/app.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/colors.css') }}">
+    <!-- END ROBUST CSS-->
+
+    <!-- BEGIN Page Level CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/core/menu/menu-types/vertical-overlay-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('template/assets/css/style.css') }}">
+</head>
+<body>
+<nav class="navbar navbar-svao">
+    <a class="navbar-brand" href="#">Svao</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ path('svao') }}">Inicio <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('login') }}">Login</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="col-md-5 col-sm-12 offset-md-3">
+        {% include 'layout/flash.html.twig' %}
+        <br>
+        {% if tipo =='natural' %}
+            <table class="table">
+                <thead></thead>
+                <tbody>
+                    <tr><th>Nombre completo:</th><td colspan="3">{{ cliente.apellidos }}, {{ cliente.nombres }}</td></tr>
+                    <tr>
+                        <th>Fecha Nacimiento:</th>
+                        <td colspan="1">{{ cliente.fechaNacimiento|date('d-m-Y')}}</td>
+                        <th>Genero:</th>
+                        <td>{{ cliente.genero ? 'Femenino':'Masculino' }}</td>
+                    </tr>
+
+                    <tr><th>Direccion:</th><td colspan="3">{{ cliente.direccion }} </td></tr>
+                    <tr><th>Numero frecuente:</th><td>{{ cliente.viajeroFrecuente }} </td></tr>
+
+                </tbody>
+            </table>
+        {% elseif tipo=='empresarial' %}
+
+        {%  endif %}
+    </div>
+
+
+</div>
+<script src="{{ asset('template/app-assets/js/core/libraries/jquery.min.js') }} " type="text/javascript"></script>
+<script src="{{ asset('template/app-assets/js/core/libraries/bootstrap.min.js') }} " type="text/javascript"></script>
+</body>
+<style>
+    .svao-form{
+        background-color: white;
+        border-radius: 5px;
+        padding: 30px;
+        border: 1px solid rgba(165,165,165,.5);
+        box-shadow: 3px 3px 3px #aaaaaa;
+
+    }
+    .navbar-svao{
+        background-color: #274C77;
+        border-radius: 0px;
+        padding-left: 10%;
+    }
+    .navbar-svao >a{
+        color: white;
+        font-weight: bold;
+    }
+    .navbar-svao >ul>li>a{
+        color: white;
+        font-weight: bold;
+    }
+</style>
+</html>

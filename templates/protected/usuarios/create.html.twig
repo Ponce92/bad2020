@@ -7,6 +7,16 @@
         <div class="form-body">
             <div class="row">
                 <div class="col-md-12">
+                        <label for="name">Selecione rol :</label>
+                        <div class="form-group">
+                            {{ form_widget(form.rol) }}
+                            <div class=" invalid-feedback text-danger">
+                                {{ form_errors(form.rol) }}
+                            </div>
+                        </div>
+            </div>
+
+                <div class="col-md-12">
                     <label for="name">Nombre :</label>
                     <div class="form-group">
                         {{ form_widget(form.nombre) }}
@@ -15,8 +25,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+
                 <div class="col-md-12">
                     <label for="name">Password :</label>
                     <div class="form-group">
@@ -28,22 +37,27 @@
                 </div>
             </div>
             <div class="row">
+
                 <div class="col-md-12">
-                    <label for="name">Selecione rol :</label>
+                    <label for="name">Selecione Aerolinea :</label>
                     <div class="form-group">
-                        {{ form_widget(form.rol) }}
+                        {{ form_widget(form.aerolinea) }}
                         <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.rol) }}
+                            {{ form_errors(form.aerolinea) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="name">Selecione aeropuerto :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.aeropuerto) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.aeropuerto) }}
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
 
             <div class="form-actions right">
                 <button type="button"

@@ -2,12 +2,15 @@
 
 namespace App\Security;
 
+use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Cliente;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @Entity @Table(name="users")
+ * @Entity @Table(name="usuarios")
  */
-class User implements UserInterface
+class User  implements UserInterface
 {
 
     /**
@@ -19,6 +22,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string",length-100,unique=true)
+
      */
     private $username;
     /**
@@ -34,6 +38,57 @@ class User implements UserInterface
      *
      * @see UserInterface
      */
+    private $aerolinea_id;
+
+    private $aeropuerto_id;
+
+    private $cliente_id;
+
+
+    public function __construct(string $username, string $password,? int $aerolinea,?int $aeropuerto,?int $cliente)
+    {
+        if (empty($username))
+        {
+            throw new \InvalidArgumentException('No username provided.');
+        }
+
+        $this->username = $username;
+        $this->password = $password;
+        //aerolinea ?
+
+        $this->aerolinea_id=  $aerolinea;
+        $this->aeropuerto_id=  $aeropuerto;
+        $this->cliente_id=$cliente;
+    }
+
+    public function getCliente(): ?int
+    {
+        return $this->cliente_id;
+    }
+
+    public function setCliente(?Cliente $cliente):self
+    {
+        return $this;
+    }
+
+    public function getAerolinea(): ?int
+    {
+
+        return $this->aerolinea_id;
+    }
+
+    public function setAerolinea(?Aerolinea $aerolinea): self
+    {
+        $this->aerolinea = $aerolinea;
+
+        return $this;
+    }
+    public function getAeropuerto():?int
+    {
+        return $this->aeropuerto_id;
+
+    }
+
 
     public function getUsername(): string
     {
@@ -71,6 +126,7 @@ class User implements UserInterface
      */
     public function getPassword()
     {
+        return $this->password;
         // not needed for apps that do not check user passwords
     }
 

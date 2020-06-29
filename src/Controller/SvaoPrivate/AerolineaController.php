@@ -12,7 +12,7 @@ use App\Form\SvaoPrivate\AerolineaType;
 class AerolineaController extends AbstractController
 {
     /**
-     * @Route("/svao/private/aerolineas", name="aerolineas.index",methods={"GET",})
+     * @Route("/svao/aerolineas", name="aerolineas.index",methods={"GET",})
      */
     public function index(Request $request)
     {

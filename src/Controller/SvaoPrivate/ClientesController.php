@@ -4,15 +4,20 @@ namespace App\Controller\SvaoPrivate;
 
 
 use App\Entity\Rol;
+use App\Entity\SvaoPrivate\Reserva;
+use App\Entity\SvaoProtected\Usuario;
 use App\Form\SvaoPrivate\ClienteEmpresarialType;
 use App\Form\SvaoPrivate\ClienteNaturalType;
 
+use App\Security\User;
 use mysql_xdevapi\Exception;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\SvaoPrivate\Cliente;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ClientesController extends AbstractController
 {
@@ -29,6 +34,7 @@ class ClientesController extends AbstractController
             'list' => $list,
         ]);
     }
+
     /**
      * @Route("/svao/private/clientes/create/natural", name="clientes.create.natural")
      */
@@ -41,13 +47,12 @@ class ClientesController extends AbstractController
                 'method'=>'POST'
                                                                         ]);
 
-        $view=$this->renderView('private/clientes/create.html.twig',[
+        $partitial=$this->renderView('private/clientes/create.html.twig',[
             'form'=>$form->createView(),
         ]);
 
-        return $this->json([
-            'status'=>'success',
-            'html'=>$view
+        return $this->render('public/cliente.html.twig',[
+                'form'=>$partitial
         ]);
     }
 
@@ -63,13 +68,12 @@ class ClientesController extends AbstractController
             'method'=>'POST'
         ]);
 
-        $view=$this->renderView('private/clientes/createEmpresarial.html.twig',[
+        $partitial=$this->renderView('private/clientes/createEmpresarial.html.twig',[
             'form'=>$form->createView(),
         ]);
 
-        return $this->json([
-            'status'=>'success',
-            'html'=>$view
+        return $this->render('public/cliente.html.twig',[
+            'form'=>$partitial
         ]);
     }
 
@@ -79,6 +83,8 @@ class ClientesController extends AbstractController
     public function storeEmpresarial(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
+        $user=new Usuario();
+        $rol=$entityManager->getRepository(Rol::class)->find(4);
         $cli=new Cliente();
         $form=$this->createForm(ClienteEmpresarialType::class,$cli,[
             'action'=>$this->generateUrl('clientes.store.empresarial'),
@@ -88,28 +94,41 @@ class ClientesController extends AbstractController
         $form->handleRequest($request);
         if($form->isValid())
         {
+            $user->setNombre($form->get('email')->getData());
+            $user->setPassword($form->get('password')->getData());
+            $user->setRol($rol);
+            $user->setfechaEdicion( new DateTime());
+            $user->setFechaCreacion(new DateTime());
+            $user->setFechaUltimoAcesso( new DateTime());
+
             $cli=$form->getData();
-            $status='success';
             try{
                 $entityManager->persist($cli);
+                $entityManager->persist($user);
                 $entityManager->flush();
+                $this->addFlash('success','Cuenta generada exitosamente.');
+                $this->addFlash('info','Ya puedes loguearte para comezar .');
+                }catch (Exception $e){
+                $this->addFlash('danger',$e->getMessage());
+                return $this->redirect('clientes.create.empresarial');
+                $status="transaccion_error";
+                }
+            $this->addFlash('warning','Ya puedes loguearte para comezar .');
+            $this->addFlash('success','Tu cueta ha sido creada satisfactoriamente');
 
-                }catch (Exception $e){$status="transaccion_error";}
-
-            $view="...";
-
+            return $this->render('public/clienteInfo.html.twig',[
+                'cliente'=>$cli,
+                'tipo'=>'empresarial'
+            ]);
         }else{
-            $status="form_errors";
-
-            $view=$this->renderView('private/clientes/createEmpresarial.html.twig',[
+            $formView=$this->renderView('private/clientes/createEmpresarial.html.twig',[
                 'form'=>$form->createView(),
+
+            ]);
+            return $this->render('public/cliente.html.twig',[
+                'form'=>$formView
             ]);
         }
-
-        return $this->json([
-            'status'=>$status,
-            'html'=>$view,
-        ]);
 
     }
     /**
@@ -119,39 +138,50 @@ class ClientesController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $cli=new Cliente();
+        $user=new Usuario();
+        $rol=$entityManager->getRepository(Rol::class)->find(4);
         $form=$this->createForm(ClienteNaturalType::class,$cli,['action'=>$this->generateUrl('clientes.store.natural'),
             'method'=>'POST'
                         ]);
         $form->handleRequest($request);
-
         if($form->isValid())
         {
+            $user->setNombre($form->get('email')->getData());
+            $user->setPassword($form->get('password')->getData());
+            $user->setRol($rol);
+            $user->setfechaEdicion( new DateTime());
+            $user->setFechaCreacion(new DateTime());
+            $user->setFechaUltimoAcesso( new DateTime());
+
             $cli=$form->getData();
-            $status="success";
+
+
             try{
+                $cli->setViajeroFrecuente(bin2hex(random_bytes(5 )));
                 $entityManager->persist($cli);
+                $entityManager->persist($user);
                 $entityManager->flush();
+            }catch (\Exception $e){
+                $this->addFlash('danger','Un error grabe a ocurrid, porfavor intenta nuevamente');
+                return $this->redirectToRoute('clientes.create.natural');
+            }
+            $this->addFlash('warning','Ya puedes loguearte para comezar .');
+            $this->addFlash('success','Tu cueta ha sido creada satisfactoriamente');
 
-            }catch (Exception $e){$status="transaccion_error";}
-            $cli=new Cliente();
-            $form=$this->createForm(ClienteNaturalType::class,$cli);
-
-            $view=$this->renderView('private/clientes/create.html.twig',[
-                'form'=>$form->createView(),
+            return $this->render('public/clienteInfo.html.twig',[
+                'cliente'=>$cli,
+                'tipo'=>'natural'
             ]);
 
         }else{
-            $status="form_errors";
-
-            $view=$this->renderView('private/clientes/create.html.twig',[
+            $formView=$this->renderView('private/clientes/create.html.twig',[
                 'form'=>$form->createView(),
             ]);
-        }
 
-        return $this->json([
-            'status'=>$status,
-            'html'=>$view,
-        ]);
+            return $this->render('public/cliente.html.twig',[
+                'form'=>$formView
+            ]);
+        }
     }
 
     /**
@@ -199,6 +229,7 @@ class ClientesController extends AbstractController
      * @Route("/svao/private/clientes/updaten/{id}", name="clientes.natural.update",methods={"POST"})
      *
      */
+
     public function naturalUpdate(Request $request,int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -277,22 +308,22 @@ class ClientesController extends AbstractController
      * @Route("/svao/private/clientes/delete/{id}", name="clientes.delete", methods={"GET"})
      *
      */
-public function delete(int $id)
-{
-    $cliente = $this->getDoctrine()
-        ->getRepository(Cliente::class)
-        ->find($id);
+    public function delete(int $id)
+    {
+        $cliente = $this->getDoctrine()
+            ->getRepository(Cliente::class)
+            ->find($id);
 
 
-    $view=$this->renderView('private/clientes/delete.html.twig',[
-        'cliente'=>$cliente,
-    ]);
+        $view=$this->renderView('private/clientes/delete.html.twig',[
+            'cliente'=>$cliente,
+        ]);
 
-    return $this->json([
-        'status'=>'success',
-        'html'=>$view
-    ]);
-}
+        return $this->json([
+            'status'=>'success',
+            'html'=>$view
+        ]);
+    }
     /**
      * @Route("/svao/private/clientes/destroy/{id}", name="clientes.destroy", methods={"GET"})
      *
@@ -322,5 +353,23 @@ public function delete(int $id)
         ]);
     }
 
+    /**
+     * @Route("/svao/private/vuelos/clientes", name="clientes.historico", methods={"GET"})
+     *
+     */
+
+    public function historico(UserInterface $user)
+    {
+        $em=$this->getDoctrine()->getRepository(Reserva::class);
+        $cliente=$this->getDoctrine()->getRepository(Cliente::class)->find($user->getCliente());
+
+        $reservas=$em->findBy([
+            'cliente'=>$cliente,
+        ]);
+
+        return $this->render('private/clientes/vuelos/historico.html.twig', [
+            'list' => $reservas,
+        ]);
+    }
 
 }

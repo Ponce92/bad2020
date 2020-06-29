@@ -3,20 +3,30 @@
 namespace App\Controller\SvaoPrivate;
 
 use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Aeropuerto;
+use App\Entity\SvaoPrivate\Ciudad;
+use App\Entity\SvaoPrivate\HorarioVuelo;
+use App\Entity\SvaoPrivate\Pais;
 use App\Entity\SvaoPrivate\Vuelo;
 use App\Form\SvaoPrivate\VueloType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class VuelosController extends AbstractController
 {
     /**
-     * @Route("/svao/private/aerolinea/{aerolinea}/vuelos", name="vuelos.index")
-     * @param Aerolinea $aerolinea
+     * @Route("/svao/private/aerolinea/vuelos", name="vuelos.index")
      */
-    public function index(Aerolinea $aerolinea)
+    public function index(UserInterface $user)
     {
+
+        if($user->getAerolinea()==null){
+            $this->addFlash('danger','No puedes acceder a la url, no tienes asignado una aerolinea.');
+            return $this->redirectToRoute('homesvao');
+        }
+        $aerolinea=$this->getDoctrine()->getRepository(Aerolinea::class)->find($user->getAerolinea());
         $list=$this->getDoctrine()
             ->getRepository(Vuelo::class)
             ->findBy(["estado"=>true,"aerolinea"=>$aerolinea]);
@@ -213,7 +223,13 @@ class VuelosController extends AbstractController
         }catch (\Exception $e){
             $this->addFlash('danger',$e->getMessage());
         }
-        return $this->redirect($this->generateUrl('vuelos.index',['aerolinea'=>$vuelo->getAerolinea()->getId()]));
+        return $this->redirect($this->generateUrl('vuelos.index',['aerolinea'=>$vuelo
+            ->getAerolinea()->getId()]));
     }
+    /**==============================================================================================
+     * Funciones para administrar la reserva de vuelo ===============================================
+     * ==============================================================================================
+     */
+
 
 }

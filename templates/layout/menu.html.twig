@@ -44,6 +44,57 @@
                     </li>
                 </ul>
             </li>
+            {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            <li class=" nav-item">
+                <a href="#">
+                    <i class="icon-flight"></i>
+                    <span data-i18n="nav.dash.main" class="menu-title">Aerolinea</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a href="{{ path('aviones.index') }}" data-i18n="nav.dash.main" class="menu-item">Aviones de linea</a>
+                    </li>
+                </ul>
+                <ul class="menu-content">
+                    <li><a href="{{ path('vuelos.index') }}" data-i18n="nav.dash.main" class="menu-item">Vuelos de linea</a>
+                    </li>
+                </ul>
+
+                <ul class="menu-content">
+                    <li>
+                        <a href="{{ path('horariosva.index') }}" data-i18n="nav.dash.main" class="menu-item">Horario de vuelo</a>
+                    </li>
+                </ul>
+            </li>
+            {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            <li class=" nav-item">
+                <a href="#">
+                    <i class="icon-location"></i>
+                    <span data-i18n="nav.dash.main" class="menu-title">Aeropuerto</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a href="{{ path('horario_aeropuerto.index') }}" data-i18n="nav.dash.main" class="menu-item">Vuelos</a>
+                    </li>
+                </ul>
+
+            </li>
+            {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            <li class=" nav-item">
+                <a href="#">
+                    <i class="icon-map"></i>
+                    <span data-i18n="nav.dash.main" class="menu-title">Mis vuelos</span>
+                </a>
+                <ul class="menu-content">
+                    <li>
+                        <a href="{{ path('clientes.historico') }}" data-i18n="nav.dash.main" class="menu-item">Historico</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('vuelos.reservas') }}" data-i18n="nav.dash.main" class="menu-item">Reserva de vuelos</a>
+                    </li>
+                </ul>
+
+            </li>
         </ul>
     </div>
 </div>

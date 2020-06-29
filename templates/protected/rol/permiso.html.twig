@@ -1,0 +1,47 @@
+<form action="{{ path('svao.roles.permisions.update',{'rol':rol.id}) }}" method="post">
+    <strong class="primary">{{ rol.name }}</strong>
+    {% for pvt in groups %}
+        <ul class="file-tree">
+            <li>
+                <a href="#"> {{ pvt.grupo }}</a>
+                <ul>
+                    {% for pivot in list %}
+                        {% if pvt.grupo == pivot.grupo %}
+                            <li>
+                                <label for="ckeck{{ pivot.id }}" class="chek" >
+                                    <input  type="checkbox"
+                                            name="permissions[]"
+                                            id="ckeck{{ pivot.id }}"
+                                            {% for val in rol.permisos %}
+                                                {{  val.id ==pivot.id ? 'checked':'' }}
+                                            {% endfor %}
+                                            class="tree-check"
+                                            value="{{ pivot.id }}" > {{ pivot.nombre }}</label>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+
+    <div class="col-md-12">
+
+            <div class="form-actions right">
+                <button type="submit" class="btn btn-success">
+                    <i class="icon-save"></i> Guardar
+                </button>
+            </div>
+
+    </div>
+</form>
+<script type="text/javascript">
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        $(".file-tree").filetree();
+        $(".file-tree-groups").filetree();
+    })();
+</script>

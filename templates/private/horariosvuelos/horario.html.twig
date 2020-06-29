@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        {{ form_start(form,{'attr':{  'class':'form'}}) }}
+        {{ form_row(form._token) }}
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name">Fecha de vuelo :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.fecha) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.fecha) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="name">Hora del vuelo :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.hora) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.hora) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name">Vuelo :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.vuelo) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.vuelo) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="name">Avion del vuelo:</label>
+                    <div class="form-group">
+                        {{ form_widget(form.avion) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.avion) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button class="btn btn-blue-grey"
+                        onclick="$('#mainCard').html('');"
+                        type="button">
+                    <i class="icon-close"></i> Cancelar
+                </button>
+                {% if delete is defined %}
+                <button type="submit"
+                        class="btn btn-danger">
+                    <i class="icon-trash2"></i> Eliminar
+                </button>
+                {% else %}
+                <button type="submit"
+                        class="btn btn-success">
+                    <i class="icon-save"></i> Guardar
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

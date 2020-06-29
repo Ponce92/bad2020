@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity\SvaoProtected;
+use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Aeropuerto;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use App\Entity\Rol;
@@ -23,7 +25,7 @@ class Usuario
 
     /**
      *
-     * @ORM\Column(type="string", length=50,name="nombre")
+     * @ORM\Column(type="string", length=50,name="username")
      */
     private $nombre;
 
@@ -39,12 +41,12 @@ class Usuario
     private $fechaCreacion;
 
     /**
-     * @ORM\Column(type="date",name="fecha_edicion")
+     * @ORM\Column(type="date",name="ultima_edicion")
      */
     private $fechaEdicion;
 
     /**
-     * @ORM\Column(type="date", nullable=true,name="fecha_ultimo_logueo")
+     * @ORM\Column(type="date", nullable=true,name="ultimo_logueo")
      */
     private $fechaUltimoAcesso;
 
@@ -53,6 +55,18 @@ class Usuario
      * @ORM\JoinColumn(nullable=false,name="rol_id")
      */
     private $rol;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Aerolinea")
+     * @ORM\JoinColumn(name="aerolinea_id")
+     */
+    private $aerolinea;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Aeropuerto")
+     * @ORM\JoinColumn(name="aeropuerto_id")
+     */
+    private $aeropuerto;
 
     public function getId(): ?int
     {
@@ -127,6 +141,30 @@ class Usuario
     public function setRol(Rol $rol): self
     {
         $this->rol = $rol;
+
+        return $this;
+    }
+
+    public function getAerolinea(): ?Aerolinea
+    {
+        return $this->aerolinea;
+    }
+
+    public function setAerolinea(?Aerolinea $aerolinea): self
+    {
+        $this->aerolinea = $aerolinea;
+
+        return $this;
+    }
+
+    public function getAeropuerto(): ?Aeropuerto
+    {
+        return $this->aeropuerto;
+    }
+
+    public function setAeropuerto(?Aeropuerto $aeropuerto): self
+    {
+        $this->aeropuerto = $aeropuerto;
 
         return $this;
     }

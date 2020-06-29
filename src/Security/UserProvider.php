@@ -8,9 +8,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use App\Security\User;
+use Doctrine\DBAL\Connection;
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
+    private $connection;
+    public function __construct(Connection $connection)
+    {
+        $this->connection=$connection;
+    }
+
     /**
      * Symfony calls this method if you use features like switch_user
      * or remember_me.
@@ -28,10 +35,21 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // The $username argument may not actually be a username:
         // it is whatever value is being returned by the getUsername()
         // method in your User class.
-        $user=new User;
-        $user->setUsername('Ponce');
-        dd($user);
+        $sql="select * from usuarios where username= :name";
+        $stm=$this->connection->prepare($sql);
+        $stm->bindValue("name",$username);
+        $stm->execute();
+        $row=$stm->fetch();
+        if(!$row['username']){
+            return null;
+        }
+        // recuperamos la aerolinea del usuario si tienen
+
+
+        $user =new User($row['username'],$row['password'],$row['aerolinea_id'],$row['aeropuerto_id'],$row['cliente_id']);
+
         return $user;
+
 
         throw new \Exception('TODO: fill in loadUserByUsername() inside '.__FILE__);
     }
@@ -57,8 +75,6 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 
         // Return a User object after making sure its data is "fresh".
         // Or throw a UsernameNotFoundException if the user no longer exists.
-        $user =new User;
-        $user->setUsername("Azael");
         return $user;
         throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
     }

@@ -1,0 +1,168 @@
+{% extends 'layout/layout.html.twig' %}
+    {% block header_links %}
+        <div class="col col-md-12">
+            <div class="content-header-right breadcrumb-new" style="padding-left: 15px;padding-bottom: 10px;">
+                <div class="row breadcrumbs-top d-inline-block">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('homesvao') }}">svao</a>
+                            </li>
+                            <li class="breadcrumb-item">Vuelos
+                            </li>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% block body %}
+
+    {# ==================================================================================================   #}
+    <div class="row">
+        <div class="col-md-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">:: Reserva</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+
+                                <div class="row">
+                                    <form action="{{ path('vuelos.reservas.destino') }}" method="get" class="form">
+                                        <div class="col-md-6">
+                                            <label for="orgen"> Seleccion origen:</label>
+                                            <div class="form-group">
+                                                <select name="origen"
+                                                        id="origen" class="form-control">
+                                                    <option value="{{ origen.id }}">{{ origen.nombre }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <label for="destino"> Seleccion destino:</label>
+                                            <div class="form-group">
+                                                <select name="destino"
+                                                        id="destino"
+                                                        onchange="this.form.submit();"
+                                                        class="form-control" id="destino">
+                                                    <option value="" disabled>Seleccione destino</option>
+                                                    {% for pvt in destinos %}
+                                                        <option value="{{ pvt.id }}"
+                                                                {% if destino.id==pvt.id  %}
+                                                                    selected
+                                                                {% endif %}
+                                                        >{{ pvt.nombre }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <br>
+                        </div>
+                        <div class="row">
+                            {% if horarios is defined %}
+                                {% if horarios|length == 0 %}
+                                    <center>
+                                        <h3>No se encontraron vuelos con los parametros.</h3>
+                                    </center>
+                                {% endif %}
+                                {% if horarios|length > 0 %}
+                                    <table class="table table-bordered table-sm">
+                                        <thead>
+                                            <th>Aerolinea</th>
+                                            <th>Fecha de vuelo</th>
+                                            <th>Hora salida</th>
+                                            <th>Precio</th>
+                                            <th>Millas</th>
+                                            <th>Tipo</th>
+                                            <th>Accion</th>
+                                        </thead>
+                                        {% for pvt in horarios  %}
+                                            <tr>
+                                                <td>{{ pvt.aerolinea.nombre }}</td>
+                                                <td>{{ pvt.fecha|date('d/m/Y') }}</td>
+                                                <td>{{ pvt.hora|date('H:i') }}</td>
+                                                <td>$ {{ pvt.vuelo.precio}}</td>
+                                                <td>{{ pvt.vuelo.millasAsignables}} Millas</td>
+                                                <td>{{ pvt.vuelo.origen.nombre }}</td>
+                                                <td align="middle">
+                                                    <a href="{{ path('vuelos.reservas.desc',{'horario':pvt.id}) }}">
+                                                        <button type="button"
+                                                                title="Reservar vuelo"
+                                                                class="btn btn-success btn-sm">
+                                                            <i class="icon-eye-plus"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {# ==================================================================================================   #}
+
+
+    <style type="text/css">
+        textarea{
+            resize: none;
+        }
+        .h400{
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+
+        table.sget tbody tr:nth-of-type(odd){
+            background-color:   rgba(245,247,250,1);
+        }
+        table.sget tbody tr td{
+            padding-bottom: 3px !important;
+            padding-top: 3px !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+            vertical-align: middle;
+        }
+        table.sget{
+            -webkit-border-top-left-radius: 10px;
+            -webkit-border-top-right-radius:10px ;
+            -moz-border-radius-topleft: 10px;
+            -moz-border-radius-topright: 10px;
+        }
+
+        table.sget tbody  tr:hover{
+            background-color:   rgba(49,165,248,.2);
+        }
+
+        textarea{
+            resize: none;
+        }
+    </style>
+
+{% endblock %}
+
+ {% block js %}
+     {#     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>#}
+     <script src="{{ asset('utils/functions.js') }} " type="text/javascript"></script>
+ {% endblock %}

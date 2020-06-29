@@ -61,9 +61,9 @@
                                         <center>
                                             <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
                                                 <button type="button"
-                                                        title="Administrar aviones"
-                                                        class="btn btn-sm btn-info">
-                                                    <i class="icon-flight"></i>
+                                                        title="Itinerario de vuelos"
+                                                        class="btn btn-sm btn-success">
+                                                    <i class="icon-calendar"></i>
                                                 </button>
                                             </a>
                                             <a href="{{ path('vuelos.index',{'aerolinea':pvt.id}) }}">
@@ -71,6 +71,20 @@
                                                         title="Administrar vuelos"
                                                         class="btn btn-sm btn-primary">
                                                     <i class="icon-location"></i>
+                                                </button>
+                                            </a>
+                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
+                                                <button type="button"
+                                                        title="Administrar aviones"
+                                                        class="btn btn-sm btn-info">
+                                                    <i class="icon-flight"></i>
+                                                </button>
+                                            </a>
+                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
+                                                <button type="button"
+                                                        title="Administrar aviones"
+                                                        class="btn btn-sm btn-info">
+                                                    <i class="icon-edit2"></i>
                                                 </button>
                                             </a>
                                         </center>

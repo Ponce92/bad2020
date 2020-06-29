@@ -37,14 +37,14 @@ class Vuelo
     private $estado;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Ciudad")
-     * @ORM\JoinColumn(nullable=false,name="ciudad_origen_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Aeropuerto")
+     * @ORM\JoinColumn(nullable=false,name="aer_origen_id")
      */
     private $origen;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Ciudad")
-     * @ORM\JoinColumn(nullable=false,name="ciudad_destino_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Aeropuerto")
+     * @ORM\JoinColumn(nullable=false,name="aer_destino_id")
      */
     private $destino;
 
@@ -120,24 +120,24 @@ class Vuelo
         return $this;
     }
 
-    public function getOrigen(): ?Ciudad
+    public function getOrigen(): ?Aeropuerto
     {
         return $this->origen;
     }
 
-    public function setOrigen(?Ciudad $origen): self
+    public function setOrigen(?Aeropuerto $origen): self
     {
         $this->origen = $origen;
 
         return $this;
     }
 
-    public function getDestino(): ?Ciudad
+    public function getDestino(): ?Aeropuerto
     {
         return $this->destino;
     }
 
-    public function setDestino(?Ciudad $destino): self
+    public function setDestino(?Aeropuerto $destino): self
     {
         $this->destino = $destino;
 

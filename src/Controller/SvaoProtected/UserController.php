@@ -2,7 +2,7 @@
 
 namespace App\Controller\SvaoProtected;
 
-use App\Entity\Rol;
+
 use App\Form\SvaoProtected\EditUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +27,6 @@ class UserController extends AbstractController
             'list' => $list,
         ]);
     }
-
 
     /**
      * @Route("/svao/protected/usuarios/create",name="usuarios.create",methods={"GET",})

@@ -3,6 +3,7 @@
 namespace App\Form\SvaoPrivate;
 
 use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Aeropuerto;
 use App\Entity\SvaoPrivate\Ciudad;
 use App\Entity\SvaoPrivate\MarcaAvion;
 use App\Entity\SvaoPrivate\ModeloAvion;
@@ -52,14 +53,14 @@ class VueloType extends AbstractType
                 ])
             ->add('origen',EntityType::class,
                 [
-                    'class'=>Ciudad::class,
+                    'class'=>Aeropuerto::class,
                     'placeholder'=>'Seleccione destino',
                     'choice_label'=>'nombre',
                     'constraints'=>[new NotBlank()]
                 ])
             ->add('destino',EntityType::class,
                 [
-                    'class'=>Ciudad::class,
+                    'class'=>Aeropuerto::class,
                     'placeholder'=>'Seleccione destino',
                     'choice_label'=>'nombre',
                     'constraints'=>[new NotBlank()]

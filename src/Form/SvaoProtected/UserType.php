@@ -21,7 +21,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre',TextType::class,[
+            ->add('username',TextType::class,[
                 'attr'=>['placeholed'=>'nombre'],
                 'constraints'=>[new NotBlank(),new Length(['min'=>4,'max'=>50])]
             ])

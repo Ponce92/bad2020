@@ -5,68 +5,94 @@
         <input type="text" placeholder="Search" class="menu-search form-control round"/>
     </div>
     <br>
+
     <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+            {% if app.user.permiso('menu_administracion') %}
             <li class=" nav-item">
-                <a href="index.html">
+                <a href="#">
                     <i class="icon-settings2"></i>
                     <span data-i18n="nav.dash.main" class="menu-title">Administracion</span>
                 </a>
-                <ul class="menu-content">
-                    <li><a href="{{ path('index_rol') }}" data-i18n="nav.dash.main" class="menu-item">Roles</a>
-                    </li>
-                </ul>
-                <ul class="menu-content">
-                    <li><a href="{{ path('usuarios.index') }}" data-i18n="nav.dash.main" class="menu-item">Usuarios</a>
-                    </li>
-                </ul>
+
+                    {% if app.user.permiso('administrar_roles') %}
+                        <ul class="menu-content">
+                            <li>
+                                <a href="{{ path('index_rol') }}" data-i18n="nav.dash.main" class="menu-item">Roles</a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                    {% if app.user.permiso('administrar_usuario') %}
+                        <ul class="menu-content">
+                            <li><a href="{{ path('usuarios.index') }}" data-i18n="nav.dash.main" class="menu-item">Usuarios</a>
+                            </li>
+                        </ul>
+                    {% endif %}
+
             </li>
-
+            {% endif %}
        {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
-
+            {% if app.user.permiso('menu_catalogos') %}
             <li class=" nav-item">
                 <a href="#">
                     <i class="icon-list"></i>
                     <span data-i18n="nav.dash.main" class="menu-title">Catalogos</span>
                 </a>
-                <ul class="menu-content">
-                    <li><a href="{{ path('aeropuertos.list') }}" data-i18n="nav.dash.main" class="menu-item">Aeropuertos</a>
-                    </li>
-                </ul>
-                <ul class="menu-content">
-                    <li><a href="{{ path('aerolineas.index') }}" data-i18n="nav.dash.main" class="menu-item">Aerolineas</a>
-                    </li>
-                </ul>
-
-                <ul class="menu-content">
-                    <li>
-                        <a href="{{ path('clientes.list') }}" data-i18n="nav.dash.main" class="menu-item">Clientes</a>
-                    </li>
-                </ul>
+                {% if app.user.permiso('catalogo_aeropuertos') %}
+                    <ul class="menu-content">
+                        <li><a href="{{ path('aeropuertos.list') }}" data-i18n="nav.dash.main" class="menu-item">Aeropuertos</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if app.user.permiso('catalogo_aerolineas') %}
+                    <ul class="menu-content">
+                        <li><a href="{{ path('aerolineas.index') }}" data-i18n="nav.dash.main" class="menu-item">Aerolineas</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if app.user.permiso('catalogo_clientes') %}
+                    <ul class="menu-content">
+                        <li>
+                            <a href="{{ path('clientes.list') }}" data-i18n="nav.dash.main" class="menu-item">Clientes</a>
+                        </li>
+                    </ul>
+                {% endif %}
             </li>
+            {% endif %}
             {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            {% if app.user.permiso('menu_aerolineas') %}
             <li class=" nav-item">
                 <a href="#">
                     <i class="icon-flight"></i>
                     <span data-i18n="nav.dash.main" class="menu-title">Aerolinea</span>
                 </a>
-                <ul class="menu-content">
-                    <li>
-                        <a href="{{ path('aviones.index') }}" data-i18n="nav.dash.main" class="menu-item">Aviones de linea</a>
-                    </li>
-                </ul>
-                <ul class="menu-content">
-                    <li><a href="{{ path('vuelos.index') }}" data-i18n="nav.dash.main" class="menu-item">Vuelos de linea</a>
-                    </li>
-                </ul>
+                {% if app.user.permiso('gestion_aviones') %}
+                    <ul class="menu-content">
+                        <li>
+                            <a href="{{ path('aviones.index') }}" data-i18n="nav.dash.main" class="menu-item">Aviones de linea</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if app.user.permiso('gestion_vuelos') %}
+                    <ul class="menu-content">
+                        <li><a href="{{ path('vuelos.index') }}" data-i18n="nav.dash.main" class="menu-item">Vuelos de linea</a>
+                        </li>
+                    </ul>
+                {% endif %}
 
-                <ul class="menu-content">
-                    <li>
-                        <a href="{{ path('horariosva.index') }}" data-i18n="nav.dash.main" class="menu-item">Horario de vuelo</a>
-                    </li>
-                </ul>
+                {% if app.user.permiso('gestion_horarios') %}
+
+                    <ul class="menu-content">
+                        <li>
+                            <a href="{{ path('horariosva.index') }}" data-i18n="nav.dash.main" class="menu-item">Horario de vuelo</a>
+                        </li>
+                    </ul>
+                {% endif %}
+
             </li>
+            {% endif %}
             {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            {% if app.user.permiso('menu_aeropuertos') %}
             <li class=" nav-item">
                 <a href="#">
                     <i class="icon-location"></i>
@@ -79,7 +105,9 @@
                 </ul>
 
             </li>
+            {% endif %}
             {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            {% if app.user.permiso('menu_vuelos') %}
             <li class=" nav-item">
                 <a href="#">
                     <i class="icon-map"></i>
@@ -95,6 +123,7 @@
                 </ul>
 
             </li>
+            {% endif %}
         </ul>
     </div>
 </div>

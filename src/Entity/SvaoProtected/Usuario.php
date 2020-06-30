@@ -1,20 +1,24 @@
 <?php
 
 namespace App\Entity\SvaoProtected;
-use App\Entity\SvaoPrivate\Aerolinea;
-use App\Entity\SvaoPrivate\Aeropuerto;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use App\Entity\Rol;
+use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Aeropuerto;
+use App\Entity\SvaoPrivate\Cliente;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SvaoProtected\UsuarioRepository")
  * @ORM\Table(name="usuarios")
- * @UniqueEntity("nombre")
+ * @UniqueEntity("username")
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -27,7 +31,7 @@ class Usuario
      *
      * @ORM\Column(type="string", length=50,name="username")
      */
-    private $nombre;
+    private $username;
 
     /**
      *
@@ -68,6 +72,14 @@ class Usuario
      */
     private $aeropuerto;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SvaoPrivate\Cliente")
+     */
+    private $cliente;
+
+
+    private $roles = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,6 +96,18 @@ class Usuario
 
         return $this;
     }
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
 
     public function getPassword(): ?string
     {
@@ -92,7 +116,8 @@ class Usuario
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+
+        $this->password=$password;
 
         return $this;
     }
@@ -167,5 +192,58 @@ class Usuario
         $this->aeropuerto = $aeropuerto;
 
         return $this;
+    }
+
+    public function getCliente(): ?Cliente
+    {
+        return $this->cliente;
+    }
+
+    public function setCliente(?Cliente $cliente): self
+    {
+        $this->cliente = $cliente;
+
+        return $this;
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function permiso($str){
+        foreach ($this->getRol()->getPermisos() as $pvt)
+        {
+            if($pvt->getNombre()==$str){
+                return true;
+            }
+        }
+        return false;
     }
 }

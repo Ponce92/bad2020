@@ -4,7 +4,11 @@ namespace App\Security;
 
 use App\Entity\SvaoPrivate\Aerolinea;
 use App\Entity\SvaoPrivate\Cliente;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Rol;
+use Doctrine\DBAL\Connection;
+use App\Entity\SvaoProtected\Permiso;
+use Symfony\Bridge\Doctrine\DependencyInjection\Security\UserProvider\EntityFactory;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -38,6 +42,9 @@ class User  implements UserInterface
      *
      * @see UserInterface
      */
+
+    private $idRol;
+
     private $aerolinea_id;
 
     private $aeropuerto_id;
@@ -45,12 +52,13 @@ class User  implements UserInterface
     private $cliente_id;
 
 
-    public function __construct(string $username, string $password,? int $aerolinea,?int $aeropuerto,?int $cliente)
+    public function __construct(?int $rol,string $username, string $password,? int $aerolinea,?int $aeropuerto,?int $cliente )
     {
         if (empty($username))
         {
             throw new \InvalidArgumentException('No username provided.');
         }
+
 
         $this->username = $username;
         $this->password = $password;
@@ -59,6 +67,7 @@ class User  implements UserInterface
         $this->aerolinea_id=  $aerolinea;
         $this->aeropuerto_id=  $aeropuerto;
         $this->cliente_id=$cliente;
+        $this->idRol=$rol;
     }
 
     public function getCliente(): ?int
@@ -146,4 +155,19 @@ class User  implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function hasPermission($str)
+    {
+
+//        $rol=$em->getRepository(Rol::class)->find($this->idRol);
+//        foreach ($rol->getPermisos() as $pvt)
+//        {
+//            if($str==$pvt->getNombre())
+//            {
+//                return true;
+//            }
+//        }
+//        return false;
+    }
 }
+

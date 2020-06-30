@@ -11,9 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\SvaoProtected\Usuario;
 use App\Form\SvaoProtected\UserType;
 use DateTime;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class UserController extends AbstractController
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder=$encoder;
+    }
+
+
     /**
      * @Route("/svao/protected/usuarios", name="usuarios.index")
      */
@@ -71,6 +81,8 @@ class UserController extends AbstractController
             $user->setFechaCreacion(new DateTime());
             $user->setFechaUltimoAcesso( new DateTime());
 
+            $code=$this->encoder->encodePassword($user,$user->getPassword());
+            $user->setPassword($code);
             $status="success";
             try{
                 $entityManager->persist($user);

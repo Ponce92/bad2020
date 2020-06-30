@@ -84,7 +84,10 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator
 
         // Check the user's password or other credentials and return true or false
         // If there are no credentials to check, you can just return true
-        if($user->getPassword() == $credentials['password']){
+
+        $code=$this->passwordEncoder->encodePassword($user,$credentials['password']);
+
+        if($user->getPassword() == $code){
             return true;
         }
         return false;

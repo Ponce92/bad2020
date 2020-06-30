@@ -2,20 +2,24 @@
 
 namespace App\Security;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use App\Security\User;
+use App\Entity\SvaoProtected\Usuario;
 use Doctrine\DBAL\Connection;
 
-class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
+class UserProvider  implements UserProviderInterface, PasswordUpgraderInterface
 {
     private $connection;
-    public function __construct(Connection $connection)
+    private $manager;
+    public function __construct(Connection $connection,EntityManagerInterface $manager)
     {
         $this->connection=$connection;
+        $this->manager=$manager;
     }
 
     /**
@@ -31,24 +35,31 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function loadUserByUsername($username)
     {
+        $user=$this->manager->getRepository(Usuario::class)->findOneBy([
+           'username'=>$username
+        ]);
+
         // Load a User object from your data source or throw UsernameNotFoundException.
         // The $username argument may not actually be a username:
         // it is whatever value is being returned by the getUsername()
         // method in your User class.
-        $sql="select * from usuarios where username= :name";
-        $stm=$this->connection->prepare($sql);
-        $stm->bindValue("name",$username);
-        $stm->execute();
-        $row=$stm->fetch();
-        if(!$row['username']){
-            return null;
-        }
+//        $sql="select * from usuarios where username= :name";
+//        $stm=$this->connection->prepare($sql);
+//        $stm->bindValue("name",$username);
+//        $stm->execute();
+//        $row=$stm->fetch();
+//        if(!$row['username']){
+//            return null;
+//        }
+
         // recuperamos la aerolinea del usuario si tienen
 
+            if ($user){
+                return $user;
+            }
+//        $user =new User($row['rol_id'],$row['username'],$row['password'],$row['aerolinea_id'],$row['aeropuerto_id'],$row['cliente_id']);
 
-        $user =new User($row['username'],$row['password'],$row['aerolinea_id'],$row['aeropuerto_id'],$row['cliente_id']);
 
-        return $user;
 
 
         throw new \Exception('TODO: fill in loadUserByUsername() inside '.__FILE__);
@@ -84,7 +95,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function supportsClass($class)
     {
-        return User::class === $class;
+        return Usuario::class === $class;
     }
 
     /**
@@ -96,4 +107,5 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // 1. persist the new password in the user storage
         // 2. update the $user object with $user->setPassword($newEncodedPassword);
     }
+
 }

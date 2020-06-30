@@ -46,8 +46,11 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {% set bar=0 %}
                             {% for pvt in list %}
+                                {% set bar=bar+1 %}
                                 <tr>
+                                    <td width="15" align="middle">{{ bar }}</td>
                                     <td>{{ pvt.horario.vuelo.origen.ciudad.nombre }} </td>
                                     <td>{{ pvt.horario.vuelo.destino.ciudad.nombre }} </td>
                                     <td>{{ pvt.horario.vuelo.millasAsignables }} Millas</td>
@@ -56,19 +59,22 @@
                                     <td align="middle">
                                         {% if pvt.estado =='Reservado' %}
                                             <button type="button" class="btn btn-red btn-sm">
-                                                <i class="icon-close"></i>
+                                                <i class="icon-cancel-circle"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-info btn-sm">
+                                                <i class="icon-eye-plus"></i>
                                             </button>
                                         {% endif %}
-                                        {% if pvt.estado =='Cancelado' %}
+                                        {% if pvt.estado !='Reservado' %}
                                             <button type="button"
                                                     disabled
-                                                    class="btn btn-red btn-sm">
-                                                <i class="icon-close"></i>
+                                                    class="btn btn-blue-grey btn-sm">
+                                                <i class="icon-cancel-circle"></i>
                                             </button>
                                             <button type="button"
-                                                    disabled
-                                                    class="btn btn-red btn-sm">
-                                                <i class="icon-close"></i>
+                                                    class="btn btn-info btn-sm">
+                                                <i class="icon-eye-plus"></i>
                                             </button>
                                         {% endif %}
                                     </td>
@@ -86,43 +92,6 @@
 
 
     {# ==================================================================================================   #}
-
-
-    <style type="text/css">
-        textarea{
-            resize: none;
-        }
-        .h400{
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-
-        table.sget tbody tr:nth-of-type(odd){
-            background-color:   rgba(245,247,250,1);
-        }
-        table.sget tbody tr td{
-            padding-bottom: 3px !important;
-            padding-top: 3px !important;
-            padding-left: 8px !important;
-            padding-right: 8px !important;
-            vertical-align: middle;
-        }
-        table.sget{
-            -webkit-border-top-left-radius: 10px;
-            -webkit-border-top-right-radius:10px ;
-            -moz-border-radius-topleft: 10px;
-            -moz-border-radius-topright: 10px;
-        }
-
-        table.sget tbody  tr:hover{
-            background-color:   rgba(49,165,248,.2);
-        }
-
-        textarea{
-            resize: none;
-        }
-    </style>
 
 {% endblock %}
 

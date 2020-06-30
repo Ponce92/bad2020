@@ -13,6 +13,7 @@ use App\Security\User;
 use mysql_xdevapi\Exception;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\SvaoPrivate\Cliente;
@@ -92,6 +93,13 @@ class ClientesController extends AbstractController
         ]);
 
         $form->handleRequest($request);
+        $email=$form->get('email')->getData();
+
+        $usuario=$entityManager->getRepository(Usuario::class)->findBy(['nombre'=>$email]);
+        if ($usuario){
+            $form->get('email')->addError(new FormError('This email already taken.'));
+        }
+
         if($form->isValid())
         {
             $user->setNombre($form->get('email')->getData());
@@ -103,11 +111,16 @@ class ClientesController extends AbstractController
 
             $cli=$form->getData();
             try{
+
+
                 $entityManager->persist($cli);
+
+                $user->setCliente($cli);
                 $entityManager->persist($user);
+
                 $entityManager->flush();
+
                 $this->addFlash('success','Cuenta generada exitosamente.');
-                $this->addFlash('info','Ya puedes loguearte para comezar .');
                 }catch (Exception $e){
                 $this->addFlash('danger',$e->getMessage());
                 return $this->redirect('clientes.create.empresarial');
@@ -144,6 +157,12 @@ class ClientesController extends AbstractController
             'method'=>'POST'
                         ]);
         $form->handleRequest($request);
+        $email=$form->get('email')->getData();
+        $usuario=$entityManager->getRepository(Usuario::class)->findBy(['nombre'=>$email]);
+        if ($usuario){
+            $form->get('email')->addError(new FormError('This email already taken.'));
+        }
+
         if($form->isValid())
         {
             $user->setNombre($form->get('email')->getData());
@@ -155,10 +174,10 @@ class ClientesController extends AbstractController
 
             $cli=$form->getData();
 
-
             try{
                 $cli->setViajeroFrecuente(bin2hex(random_bytes(5 )));
                 $entityManager->persist($cli);
+                $user->setCliente($cli);
                 $entityManager->persist($user);
                 $entityManager->flush();
             }catch (\Exception $e){

@@ -45,13 +45,15 @@
 <div class="container-fluid">
     <div class="col-md-5 col-sm-12 offset-md-3">
         {% include 'layout/flash.html.twig' %}
-        <br>
+        <br><br>
         {% if tipo =='natural' %}
             <table class="table">
                 <thead></thead>
                 <tbody>
-                    <tr><th>Nombre completo:</th><td colspan="3">{{ cliente.apellidos }}, {{ cliente.nombres }}</td></tr>
                     <tr>
+                        <th>Nombre completo:</th>
+                        <td colspan="3">{{ cliente.apellidos }}, {{ cliente.nombres }}</td>
+                    </tr>
                         <th>Fecha Nacimiento:</th>
                         <td colspan="1">{{ cliente.fechaNacimiento|date('d-m-Y')}}</td>
                         <th>Genero:</th>
@@ -63,6 +65,17 @@
 
                 </tbody>
             </table>
+            <div class="row">
+
+                <div class="col-md-12"><br>
+                    <div  style="border: 1px solid rgba(165,165,165,.5); border-left: 5px solid green;padding: 10px">
+                        <strong>Info</strong><br>
+                        <p>
+                            El nombre de usuario es tu correo electronico
+                        </p>
+                    </div>
+                </div>
+            </div>
         {% elseif tipo=='empresarial' %}
 
         {%  endif %}

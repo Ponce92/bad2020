@@ -56,6 +56,8 @@ class UserProvider  implements UserProviderInterface, PasswordUpgraderInterface
 
             if ($user){
                 return $user;
+            }else{
+                return false;
             }
 //        $user =new User($row['rol_id'],$row['username'],$row['password'],$row['aerolinea_id'],$row['aeropuerto_id'],$row['cliente_id']);
 

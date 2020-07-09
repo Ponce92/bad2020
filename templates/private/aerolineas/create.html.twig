@@ -87,16 +87,23 @@
         </div>
     </div>
 </div>
-
-
-
+{% if accion is defined %}
     <div class="form-actions right">
-        <button type="button"
-                onclick="loadCardPostAjax($('#createForm'),$('#mainCard'))"
+        <button type="submit"
+                class="btn btn-danger">
+            <i class="icon-trash2"></i> Eliminar
+        </button>
+    </div>
+{% else %}
+    <div class="form-actions right">
+        <button type="submit"
                 class="btn btn-success">
             <i class="icon-plus"></i> Guardar
         </button>
     </div>
+{% endif %}
+
+
 
 {{ form_end(form) }}
 

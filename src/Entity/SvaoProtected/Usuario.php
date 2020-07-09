@@ -80,6 +80,11 @@ class Usuario implements UserInterface
 
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="string", length=3)
+     */
+    private $estado;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -245,5 +250,17 @@ class Usuario implements UserInterface
             }
         }
         return false;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(string $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
     }
 }

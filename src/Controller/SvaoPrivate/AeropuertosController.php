@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 use Symfony\Component\Routing\Annotation\Route;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-
 use App\Entity\SvaoPrivate\Aeropuerto;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,13 +32,12 @@ class AeropuertosController extends AbstractController
 
         $list=$this->getDoctrine()
             ->getRepository(Aeropuerto::class)
-            ->findAll();
+        ->findBy(['estado'=>true]);
 
         return $this->render('private/aeropuerto/aeropuertos.html.twig',[
             'list'=>$list,
             'aeropuerto'=>$aeropuerto
         ]);
-
     }
 
     /**
@@ -124,10 +122,10 @@ class AeropuertosController extends AbstractController
             ->getRepository(Aeropuerto::class)
             ->find($id);
 
-            $form=$this->createForm(AeropuertoType::class,$aeropuerto,[
-                'action'=>$this->generateUrl('aeropuertos.update',['id'=>$id]),
-                'method'=>'POST',
-            ]);
+        $form=$this->createForm(AeropuertoType::class,$aeropuerto,[
+            'action'=>$this->generateUrl('aeropuertos.update',['id'=>$id]),
+            'method'=>'POST',
+        ]);
 
         $view=$this->renderView('private/aeropuerto/create.html.twig',[
             'form'=>$form->createView(),
@@ -176,9 +174,43 @@ class AeropuertosController extends AbstractController
     /**
      * @Route("/svao/private/aeropuertos/{id}/delete", name="aeropuertos.delete",methods={"GET",})
      */
-    public function delete()
+    public function delete($id)
     {
+        $aeropuerto = $this->getDoctrine()
+            ->getRepository(Aeropuerto::class)
+            ->find($id);
 
+        $form=$this->createForm(AeropuertoType::class,$aeropuerto,[
+            'action'=>$this->generateUrl('aeropuertos.trash',['id'=>$id]),
+            'method'=>'POST',
+        ]);
+
+        $view=$this->renderView('private/aeropuerto/create.html.twig',[
+            'form'=>$form->createView(),
+            'accion'=>'delete',
+        ]);
+
+        return $this->json([
+            'status'=>'success',
+            'html'=>$view
+        ]);
+
+    }
+
+    /**
+     * @Route("/svao/private/aeropuertos/{id}/trash", name="aeropuertos.trash",methods={"POST",})
+     */
+    public function trash(int $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $aeropuerto=$entityManager->getRepository(Aeropuerto::class)
+            ->find($id);
+        $aeropuerto->setEstado(false);
+
+        $entityManager->flush();
+
+        $this->addFlash('info','Elemento eliminado correctamente.');
+        return $this->redirect($this->generateUrl('aeropuertos.list'));
 
     }
 }

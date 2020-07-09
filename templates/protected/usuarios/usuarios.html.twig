@@ -65,7 +65,7 @@
                                                 title="Trash"
                                                 onclick="loadTarget('{{ path('usuaios.delete',{'id':pvt.id}) }}',$('#mainCard'))"
                                                 class="btn btn-sm btn-danger">
-                                            <i class="icon-cog2"></i>
+                                            <i class="icon-user-minus"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -90,7 +90,9 @@
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block" id="mainCard">
-
+                        {% if form is defined %}
+                            {{ form|raw }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@
 namespace App\Form\SvaoProtected;
 
 use App\Entity\Rol;
+use App\Entity\SvaoPrivate\Aerolinea;
+use App\Entity\SvaoPrivate\Aeropuerto;
 use App\Entity\SvaoProtected\Usuario;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,7 +20,7 @@ class EditUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre',TextType::class,[
+            ->add('username',TextType::class,[
                 'attr'=>['placeholed'=>'nombre'],
                 'constraints'=>[new NotBlank(),new Length(['min'=>4,'max'=>50])]
             ])
@@ -27,6 +29,18 @@ class EditUserType extends AbstractType
                 'choice_label'=>'name',
                 'constraints'=>[new NotBlank()]
             ])
+            ->add('aerolinea',EntityType::class,
+                [
+                    'class'=>Aerolinea::class,
+                    'placeholder'=>'Seleccione aerolinea',
+                    'choice_label'=>'nombre'
+                ])
+            ->add('aeropuerto',EntityType::class,
+                [
+                    'class'=>Aeropuerto::class,
+                    'placeholder'=>'Seleccione Aeropuerto',
+                    'choice_label'=>'nombre'
+                ])
         ;
     }
 

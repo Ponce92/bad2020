@@ -61,6 +61,11 @@ class Aerolinea
      */
     private $pais;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estado;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -158,6 +163,18 @@ class Aerolinea
     public function setPais(?Pais $pais): self
     {
         $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function getEstado(): ?bool
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(bool $estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }

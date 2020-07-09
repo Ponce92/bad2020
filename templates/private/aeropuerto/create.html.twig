@@ -83,12 +83,34 @@
 
         <i class="icon-close"></i> Cancelar
     </button>
-    <button type="button"
-            onclick="$('#form').submit()"
-            class="btn btn-success">
-        <i class="icon-save"></i> Guardar
-    </button>
+    {% if accion is defined %}
+        <button type="button"
+                title="Eliminar aeropuerto"
+                onclick="$('#form').submit()"
+                class="btn btn-danger">
+            <i class="icon-trash2"></i> Eliminar
+        </button>
+    {% else %}
+
+        <button type="button"
+                onclick="$('#form').submit()"
+                class="btn btn-success">
+            <i class="icon-save"></i> Guardar
+        </button>
+    {% endif %}
+
 </div>
 
 {{ form_end(form) }}
+<script type="text/javascript">
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            //===========================================================================================================
+            $('.phone').mask('00000000');
+            $('.int').mask('000');
+        })();
+</script>
 

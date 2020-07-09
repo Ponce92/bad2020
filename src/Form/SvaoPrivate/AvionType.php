@@ -25,7 +25,7 @@ class AvionType extends AbstractType
                 ])
             ->add('capacidad',NumberType::class,
                 [
-                'attr'=>['placeholder'=>'00'],
+                'attr'=>['placeholder'=>'00','class'=>'int'],
                 'constraints'=>[new NotBlank()],
                 ])
             ->add('tipo',EntityType::class,

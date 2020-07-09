@@ -25,11 +25,13 @@ class AeropuertoType extends AbstractType
         $builder
             ->add('nombre',TextType::class,['attr'=>['placeholder'=>'aeropuerto'],
                 'constraints'=>[new NotBlank(),new Length(['min'=>4])]])
-            ->add('telefono', NumberType::class,['attr'=>['placeholder'=>'0000 0000'],
+            ->add('telefono', NumberType::class,['attr'=>['placeholder'=>'0000 0000','class'=>'phone'],
                 'constraints'=>[new NotBlank(),new Length(['min'=>8,'max'=>8])]])
             ->add('encargado',TextType::class,['attr'=>['placeholder'=>'Nombre encargado'],
                 'constraints'=>[new NotBlank(),new Length(['min'=>4,'max'=>50])]])
-            ->add('bahias',NumberType::class,['constraints'=>[new NotBlank()]])
+            ->add('bahias',NumberType::class,[
+                'attr'=>['class'=>'int'],
+                'constraints'=>[new NotBlank()]])
             ->add('ciudad',EntityType::class,
                 [
                 'class'=>Ciudad::class,

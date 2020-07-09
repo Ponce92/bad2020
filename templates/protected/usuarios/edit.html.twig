@@ -9,9 +9,9 @@
                 <div class="col-md-12">
                     <label for="name">Nombre :</label>
                     <div class="form-group">
-                        {{ form_widget(form.nombre) }}
+                        {{ form_widget(form.username) }}
                         <div class=" invalid-feedback text-danger">
-                            {{ form_errors(form.nombre) }}
+                            {{ form_errors(form.username) }}
                         </div>
                     </div>
                 </div>
@@ -28,9 +28,33 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <label for="name">Selecione Aerolinea :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.aerolinea) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.aerolinea) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="name">Selecione aeropuerto :</label>
+                    <div class="form-group">
+                        {{ form_widget(form.aeropuerto) }}
+                        <div class=" invalid-feedback text-danger">
+                            {{ form_errors(form.aeropuerto) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <div class="form-actions right">
-                <button type="button"
-                        onclick="loadCardPostAjax($('#editFrom'),$('#mainCard'))"
+                <button type="submit"
                         class="btn btn-success">
                     <i class="icon-plus"></i> Guardar
                 </button>

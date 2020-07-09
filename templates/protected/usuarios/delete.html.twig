@@ -9,14 +9,14 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-4"><strong>Nombre :</strong></div>
-        <div class="col-md-8"><p>        {{ user.nombre }}</p></div>
+        <div class="col-md-8"><p>        {{ user.username }}</p></div>
     </div>
     <div class="row">
         <div class="col-md-4"><strong>Descripcion :</strong></div>
         <div class="col-md-8"><p>        {{ user.rol.name }}</p></div>
     </div>
 
-    <form class="form">
+    <form class="form" method="POST" action="{{ path('usuarios.destroy',{'id':user.id}) }}">
 
         <div class="form-actions right">
             <button type="button"
@@ -24,8 +24,7 @@
                     class="btn btn-grey">
                 <i class="icon-close"></i> Cancelar
             </button>
-            <button type="button"
-                    onclick="loadTarget('{{ path('usuarios.destroy',{'id':user.id}) }}',$('#mainCard'))"
+            <button type="submit"
                     class="btn btn-danger">
                 <i class="icon-trash2"></i> Eliminar
             </button>

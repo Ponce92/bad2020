@@ -58,17 +58,19 @@
                                     {% if error %}
                                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                                     {% endif %}
-                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}">
 
                                     <fieldset class="form-group position-relative has-icon-left mb-0">
-                                            <input class="form-control" value="{{ last_username }}"  name="username" type="text">
+                                            <input class="form-control"
+                                                   required
+                                                   value="{{ last_username }}"  name="username" type="text">
                                             <div class="form-control-position">
                                                 <i class="icon-head"></i>
                                             </div>
                                         </fieldset>
                                     <br>
                                         <fieldset class="form-group position-relative has-icon-left">
-                                            <input type="password" class="form-control" name="password" id="password">
+                                            <input type="password" required class="form-control" name="password" id="password">
                                             <div class="form-control-position">
                                                 <i class="icon-key3"></i>
                                             </div>
@@ -80,7 +82,7 @@
                         <div class="card-footer">
                             <div class="">
                                 <p class="float-sm-ceter text-xs-center m-0">
-                                    <a href="#" class="card-link">  BAD - 115.</a>
+                                    <a href="{{ path('svao') }}" class="card-link">  BAD - 115.</a>
                                 </p>
                             </div>
                         </div>

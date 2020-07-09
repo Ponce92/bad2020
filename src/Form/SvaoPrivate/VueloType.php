@@ -26,29 +26,29 @@ class VueloType extends AbstractType
             ->add('codigo',TextType::class,['attr'=>['readonly'=>true]])
 
             ->add('tiempoVuelo',NumberType::class,[
-                    'attr'=>['placeholder'=>'0.0'],
+                    'attr'=>['placeholder'=>'0.0','class'=>'int'],
                     'constraints'=>[new NotBlank()]
             ])
             ->add('costoViaje',NumberType::class,
                 [
-                    'attr'=>['placeholder'=>'0.0'],
+                    'attr'=>['placeholder'=>'0.0','class'=>'precio'],
                     'constraints'=>[new NotBlank()]
                 ]
             )
             ->add('precio',NumberType::class,
                 [
-                    'attr'=>['placeholder','0.0'],
+                    'attr'=>['placeholder','0.0','class'=>'precio'],
                     'constraints'=>[New NotBlank()]
                 ]
             )
             ->add('millasAsignables',NumberType::class,
                     [
-                        'attr'=>['0.0'],
+                        'attr'=>['placeholder'=>'00','class'=>'int'],
                         'constraints'=>[new NotBlank()]
                     ]
                 )
             ->add('millasReal',NumberType::class,[
-                'attr'=>['placeholder'=>"0.0"],
+                'attr'=>['placeholder'=>"0.0",'class'=>'int'],
                 'constraints'=>[new NotBlank()]
                 ])
             ->add('origen',EntityType::class,

@@ -31,7 +31,7 @@ class UserController extends AbstractController
     {
         $list=$this->getDoctrine()
             ->getRepository(Usuario::class)
-            ->findAll();
+            ->findBy(['estado'=>'I']);
 
         return $this->render('protected/usuarios/usuarios.html.twig', [
             'list' => $list,
@@ -139,7 +139,6 @@ class UserController extends AbstractController
             'status'=>'success',
             'html'=>$view
         ]);
-
     }
 
 
@@ -169,17 +168,30 @@ class UserController extends AbstractController
                 $status='transaccion_error';
             }
         }else{
-            $status="form_erors";
+
             $view=$this->renderView('protected/usuarios/edit.html.twig',[
                 'form'=>$form->createView(),
                 'id'=>$id,
             ]);
-        }
 
-        return $this->json([
-            'status'=>$status,
-            'html'=>$view,
-        ]);
+            $list=$this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->findAll();
+
+            return $this->render('protected/usuarios/usuarios.html.twig', [
+                'list' => $list,
+                'form'=>$view
+            ]);
+
+
+
+        }
+//        return $this->json([
+//            'status'=>$status,
+//            'html'=>$view,
+//        ]);
+        $this->addFlash('success','Usuario actualizado correctamente');
+        return $this->redirect($this->generateUrl('usuarios.index'));
 
     }
 
@@ -205,7 +217,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("svao/protected/usuarios/destroy/{id}",name="usuarios.destroy",methods={"GET",})
+     * @Route("svao/protected/usuarios/destroy/{id}",name="usuarios.destroy",methods={"POST",})
      */
 
     public function destroy(int $id)
@@ -216,7 +228,7 @@ class UserController extends AbstractController
             ->find($id);
 
         try {
-            $entityManager->remove($obj);
+            $obj->setEstado('E');
             $entityManager->flush();
 
             $view="";
@@ -225,11 +237,7 @@ class UserController extends AbstractController
         }catch (\Exception $e){
             $status='transac_error';
         }
-
-        return $this->json([
-            'status'=>$status,
-            'html'=>$view
-        ]);
-
+        $this->addFlash('success','Usuario eliminado correctamente');
+        return $this->redirect($this->generateUrl('usuarios.index'));
     }
 }

@@ -58,6 +58,11 @@ class Aeropuerto
      */
     private $ciudad;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estado;
+
 
 
     public function getId(): ?int
@@ -145,6 +150,18 @@ class Aeropuerto
     public function setCiudad(?Ciudad $ciudad): self
     {
         $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    public function getEstado(): ?bool
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(bool $estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }

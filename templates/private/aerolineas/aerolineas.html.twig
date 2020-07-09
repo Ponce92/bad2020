@@ -59,34 +59,19 @@
                                     <td>{{ pvt.pais.nombre }}</td>
                                     <td>
                                         <center>
-                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Itinerario de vuelos"
-                                                        class="btn btn-sm btn-success">
-                                                    <i class="icon-calendar"></i>
-                                                </button>
-                                            </a>
-                                            <a href="{{ path('vuelos.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar vuelos"
-                                                        class="btn btn-sm btn-primary">
-                                                    <i class="icon-location"></i>
-                                                </button>
-                                            </a>
-                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar aviones"
-                                                        class="btn btn-sm btn-info">
-                                                    <i class="icon-flight"></i>
-                                                </button>
-                                            </a>
-                                            <a href="{{ path('aviones.index',{'aerolinea':pvt.id}) }}">
-                                                <button type="button"
-                                                        title="Administrar aviones"
-                                                        class="btn btn-sm btn-info">
-                                                    <i class="icon-edit2"></i>
-                                                </button>
-                                            </a>
+
+                                            <button type="button"
+                                                    onclick="loadTarget('{{ path('aerolineas.edit',{'linea':pvt.id}) }}',$('#mainCard'))"
+                                                    title="Editar aerolinea"
+                                                    class="btn btn-sm btn-info">
+                                                <i class="icon-edit2"></i>
+                                            </button>
+                                            <button type="button"
+                                                    onclick="loadTarget('{{ path('aerolineas.delete',{'linea':pvt.id}) }}',$('#mainCard'))"
+                                                    title="Editar aerolinea"
+                                                    class="btn btn-sm btn-danger">
+                                                <i class="icon-trash2"></i>
+                                            </button>
                                         </center>
                                     </td>
                                 </tr>
@@ -111,7 +96,9 @@
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block" id="mainCard">
-
+                        {% if form is defined %}
+                        {{ form|raw }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

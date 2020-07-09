@@ -2,6 +2,8 @@
 
 namespace App\Repository\SvaoPrivate;
 
+use App\Entity\SvaoPrivate\Aeropuerto;
+use App\Entity\SvaoPrivate\Ciudad;
 use App\Entity\SvaoPrivate\Vuelo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,4 +49,19 @@ class VueloRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getCode(Aeropuerto $origen,Aeropuerto $destino ){
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select FN_GENERATE_CODE_VUELO(:id1,:id2);';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(
+            [
+                'id1' =>$origen->getCiudad()->getId(),
+                'id2' =>$destino->getCiudad()->getId(),
+            ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch(0);
+        $stmt = $conn->prepare($sql);
+    }
 }

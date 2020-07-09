@@ -20,9 +20,9 @@ class AerolineaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('codigo',TextType::class,['attr'=>['placeholder'=>'codigo'],
-                'constraints'=>[new Length(['min'=>2,'max'=>6]),new NotBlank()]
-            ])
+//            ->add('codigo',TextType::class,['attr'=>['placeholder'=>'codigo'],
+//                'constraints'=>[new Length(['min'=>2,'max'=>6]),new NotBlank()]
+//            ])
             ->add('nombre',TextType::class,['attr'=>['placeholder'=>'nombre oficial'],
                 'constraints'=>[new Length(['min'=>3,'max'=>100]),new NotBlank()]
                 ])

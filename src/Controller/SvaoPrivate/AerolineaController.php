@@ -55,6 +55,7 @@ class AerolineaController extends AbstractController
     public function store(Request $request){
         $entityManager=$this->getDoctrine()->getManager();
 
+
         $linea=new Aerolinea();
         $form=$this->createForm(AerolineaType::class,$linea,[
            'action'=>$this->generateUrl('aerolineas.store'),
@@ -66,6 +67,12 @@ class AerolineaController extends AbstractController
         if($form->isValid())
         {
             $linea=$form->getData();
+            $code=$entityManager->getRepository(Aerolinea::class)->getCode($form->get('nombre')->getData());
+            //---------------------------------------------------------------------------------------------------------
+            //---------------------------------------------------------------------------------------------------------
+
+            $linea->setCodigo($code['fn_generate_code_aerolineas']);
+
             $status="success";
             try{
                 $entityManager->persist($linea);

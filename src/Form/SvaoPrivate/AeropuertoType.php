@@ -44,20 +44,20 @@ class AeropuertoType extends AbstractType
                 'constraints'=>[new NotBlank()]
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA,function (FormEvent $event){
-            $aerolinea=$event->getData();
-            $form=$event->getForm();
-
-            if(!$aerolinea || null === $aerolinea->getId()){
-                $form->add('codigo',TextType::class,['attr'=>['placeholder'=>'codigo','class'=>'upper'],
-                    'constraints'=>[new NotBlank(),new Length(['min'=>6,'max'=>6])]
-                ]);
-            }else{
-                $form->add('codigo',TextType::class,['attr'=>['readonly'=>true],
-                    'constraints'=>[new NotBlank(),new Length(['min'=>6,'max'=>6])]
-                ]);
-            }
-        });
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA,function (FormEvent $event){
+//            $aerolinea=$event->getData();
+//            $form=$event->getForm();
+//
+//            if(!$aerolinea || null === $aerolinea->getId()){
+//                $form->add('codigo',TextType::class,['attr'=>['placeholder'=>'codigo','class'=>'upper'],
+//                    'constraints'=>[new NotBlank(),new Length(['min'=>6,'max'=>6])]
+//                ]);
+//            }else{
+//                $form->add('codigo',TextType::class,['attr'=>['readonly'=>true],
+//                    'constraints'=>[new NotBlank(),new Length(['min'=>6,'max'=>6])]
+//                ]);
+//            }
+//        });
     }
 
     public function configureOptions(OptionsResolver $resolver)

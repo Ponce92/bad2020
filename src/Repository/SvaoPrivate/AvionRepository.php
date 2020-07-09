@@ -2,7 +2,10 @@
 
 namespace App\Repository\SvaoPrivate;
 
+use App\Entity\SvaoPrivate\Aerolinea;
 use App\Entity\SvaoPrivate\Avion;
+use App\Entity\SvaoPrivate\Pais;
+use App\Entity\SvaoPrivate\TipoAvion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +50,15 @@ class AvionRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getCode(Aerolinea $linea,TipoAvion $tipoAvion){
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select FN_GENERATE_CODE_AVION(:id1,:id2);';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id1' => $linea->getId(),'id2'=>$tipoAvion->getId()]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch(0);
+        $stmt = $conn->prepare($sql);
+    }
 }

@@ -46,7 +46,6 @@ class AvionesController extends AbstractController
                 'action'=>$this->generateUrl('aviones.store',['aerolinea'=>$aerolinea->getId()])
             ]);
 
-
         $view=$this->renderView('private/aerolineas/aviones/avion.html.twig',
             [
                 'form'=>$form->createView(),
@@ -78,7 +77,11 @@ class AvionesController extends AbstractController
         if($form->isValid())
         {
             $obj=$form->getData();
-            $obj->setCodigo(bin2hex(random_bytes(5 )));
+            $em=$this->getDoctrine()
+                ->getRepository(Avion::class)
+                ->getCode($aerolinea,$form->get('tipo')->getData());
+
+            $obj->setCodigo($em['fn_generate_code_avion']);
             $obj->setEstado(true);
             $obj->setAerolinea($aerolinea);
 

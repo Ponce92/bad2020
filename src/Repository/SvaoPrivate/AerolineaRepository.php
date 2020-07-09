@@ -47,4 +47,16 @@ class AerolineaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getCode($name){
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select FN_GENERATE_CODE_AEROLINEAS(:name);';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['name' => $name]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch(0);
+        $stmt = $conn->prepare($sql);
+    }
 }

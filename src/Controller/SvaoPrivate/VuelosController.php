@@ -80,7 +80,9 @@ class VuelosController extends AbstractController
         if($form->isValid())
         {
             $obj=$form->getData();
-            $obj->setCodigo(bin2hex(random_bytes(5 )));
+            $code=$entityManager->getRepository(Vuelo::class)
+                ->getCode($form->get('origen')->getData(),$form->get('destino')->getData());
+            $obj->setCodigo($code['fn_generate_code_vuelo']);
             $obj->setAerolinea($aerolinea);
             $obj->setEstado(true);
             try{

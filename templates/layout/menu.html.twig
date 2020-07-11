@@ -5,9 +5,13 @@
 
 </center>
     <div class="main-menu-header">
+        <center>
+            <strong id="fecha_hora_actual" onload="mueveReloj()"></strong>
+        </center>
+
 {#        <input type="text" placeholder="Search" class="menu-search form-control round"/>#}
     </div>
-    <br>
+
 
     <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
@@ -146,4 +150,19 @@
             {% endif %}
         </ul>
     </div>
+
+<script type="text/javascript">
+        function mueveReloj(){
+            momentoActual = new Date()
+            hora = momentoActual.getHours()
+            minuto = momentoActual.getMinutes()
+            segundo = momentoActual.getSeconds()
+
+            horaImprimible = hora + " : " + minuto + " : " + segundo
+
+            $('#fecha_hora_actual').html(horaImprimible);
+
+            setTimeout("mueveReloj()",1000)
+        }
+</script>
 </div>

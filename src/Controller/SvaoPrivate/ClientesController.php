@@ -95,14 +95,15 @@ class ClientesController extends AbstractController
         $form->handleRequest($request);
         $email=$form->get('email')->getData();
 
-        $usuario=$entityManager->getRepository(Usuario::class)->findBy(['nombre'=>$email]);
+        $usuario=$entityManager->getRepository(Usuario::class)->findBy(['username'=>$email]);
         if ($usuario){
             $form->get('email')->addError(new FormError('This email already taken.'));
         }
 
         if($form->isValid())
         {
-            $user->setNombre($form->get('email')->getData());
+            $user->setUsername($form->get('email')->getData());
+            $user->setEstado(true);
             $user->setPassword($form->get('password')->getData());
             $user->setRol($rol);
             $user->setfechaEdicion( new DateTime());
@@ -158,14 +159,15 @@ class ClientesController extends AbstractController
                         ]);
         $form->handleRequest($request);
         $email=$form->get('email')->getData();
-        $usuario=$entityManager->getRepository(Usuario::class)->findBy(['nombre'=>$email]);
+        $usuario=$entityManager->getRepository(Usuario::class)->findBy(['username'=>$email]);
         if ($usuario){
             $form->get('email')->addError(new FormError('This email already taken.'));
         }
 
         if($form->isValid())
         {
-            $user->setNombre($form->get('email')->getData());
+            $user->setUsername($form->get('email')->getData());
+            $user->setEstado(true);
             $user->setPassword($form->get('password')->getData());
             $user->setRol($rol);
             $user->setfechaEdicion( new DateTime());
@@ -181,7 +183,7 @@ class ClientesController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
             }catch (\Exception $e){
-                $this->addFlash('danger','Un error grabe a ocurrid, porfavor intenta nuevamente');
+                $this->addFlash('danger','Un error grabe a ocurrid, porfavor intenta nuevamente'.$e->getMessage());
                 return $this->redirectToRoute('clientes.create.natural');
             }
             $this->addFlash('warning','Ya puedes loguearte para comezar .');

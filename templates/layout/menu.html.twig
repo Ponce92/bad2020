@@ -1,8 +1,11 @@
 <div data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion menu-shadow">
 
+<center>
+    <br>
+
+</center>
     <div class="main-menu-header">
-        <br>
-        <input type="text" placeholder="Search" class="menu-search form-control round"/>
+{#        <input type="text" placeholder="Search" class="menu-search form-control round"/>#}
     </div>
     <br>
 
@@ -50,13 +53,13 @@
                         </li>
                     </ul>
                 {% endif %}
-                {% if app.user.permiso('catalogo_clientes') %}
-                    <ul class="menu-content">
-                        <li>
-                            <a href="{{ path('clientes.list') }}" data-i18n="nav.dash.main" class="menu-item">Clientes</a>
-                        </li>
-                    </ul>
-                {% endif %}
+{#                {% if app.user.permiso('catalogo_clientes') %}#}
+{#                    <ul class="menu-content">#}
+{#                        <li>#}
+{#                            <a href="{{ path('clientes.list') }}" data-i18n="nav.dash.main" class="menu-item">Clientes</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                {% endif %}#}
             </li>
             {% endif %}
             {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}

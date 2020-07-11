@@ -80,6 +80,7 @@ class AeropuertosController extends AbstractController
         if($form->isValid())
         {
             $aeropuerto=$form->getData();
+            $aeropuerto->setEstado(true);
             $code=$entityManager->getRepository(Aeropuerto::class)->getCode($form->get('pais')->getData());
             $aeropuerto->setCodigo($code['fn_generate_code_aeropuertos']);
 

@@ -80,7 +80,7 @@ class UserController extends AbstractController
             $user->setfechaEdicion( new DateTime());
             $user->setFechaCreacion(new DateTime());
             $user->setFechaUltimoAcesso( new DateTime());
-
+            $user->setEstado('I');
             $code=$this->encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($code);
             $status="success";

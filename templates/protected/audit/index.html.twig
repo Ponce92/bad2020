@@ -1,0 +1,135 @@
+ {% extends 'layout/layout.html.twig' %}
+    {% block header_links %}
+        <div class="col col-md-12">
+            <div class="content-header-right breadcrumb-new" style="padding-left: 15px;padding-bottom: 10px;">
+                <div class="row breadcrumbs-top d-inline-block">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('homesvao') }}">svao</a>
+                            </li>
+                            <li class="breadcrumb-item">protected
+                            </li>
+                            <li class="breadcrumb-item">Auditoria
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12" >
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">:: Acciones</h4>
+                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                    <div class="heading-elements">
+                    </div>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block" id="dtable">
+                        <div class="col-md-3 offset-md-2">
+                            <form action="{{ path('svao.protected.audit') }}">
+                            <label for="tabla">Seleccione tabla :</label>
+                            <select name="tabla"
+                                    onchange="this.form.submit()"
+                                    class="form-control"
+                                    id="tabla">
+                                <option value="">Todas las tablas</option>
+                                {% for pvt in tablas %}
+                                    <option value="{{ pvt.nombre_tabla }}"
+                                    {% if tbl==pvt.nombre_tabla%}selected{% endif %}
+                                    >{{ pvt.nombre_tabla }}</option>
+                                {% endfor %}
+                            </select>
+                            </form>
+                        </div>
+
+                        <div class="col-md-12">
+                            <br><br>
+                            <table class="table table-bordered sget">
+                                <thead>
+                                <tr>
+                                    <th>Tabla</th>
+                                    <th>Accion</th>
+                                    <th>Fecha</th>
+                                    <th>Usuario</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for pvt in list %}
+                                    <tr>
+                                        <td>{{ pvt.tabla }}</td>
+                                        <td>{{ pvt.accion }}</td>
+                                        <td>{{ pvt.fecha }}</td>
+                                        <td width="150">
+                                            {{ pvt.usuario }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ==================================================================================================   #}
+
+    <style type="text/css">
+            textarea{
+                resize: none;
+            }
+            .h400{
+                max-height: 400px;
+                overflow-y: auto;
+            }
+
+
+            table.sget tbody tr:nth-of-type(odd){
+                background-color:   rgba(245,247,250,1);
+            }
+            table.sget tbody tr td{
+                padding-bottom: 3px !important;
+                padding-top: 3px !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+                vertical-align: middle;
+            }
+            table.sget{
+                -webkit-border-top-left-radius: 10px;
+                -webkit-border-top-right-radius:10px ;
+                -moz-border-radius-topleft: 10px;
+                -moz-border-radius-topright: 10px;
+            }
+
+            table.sget tbody  tr:hover{
+                background-color:   rgba(49,165,248,.2);
+            }
+
+            textarea{
+                resize: none;
+            }
+            .chek:hover{
+                cursor: pointer;
+            }
+    </style>
+
+{% endblock %}
+
+ {% block js %}
+     <script src="{{ asset('utils/functions.js') }} " type="text/javascript"></script>
+     <script src="{{ asset('filetree/js/file-explore.js') }} " type="text/javascript"></script>
+
+     <script type="text/javascript">
+        function saveDataCheck()
+        {
+
+        }
+     </script>
+ {% endblock %}

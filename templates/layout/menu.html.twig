@@ -124,6 +124,23 @@
 
             </li>
             {% endif %}
+            {# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      #}
+            {% if app.user.permiso('menu_auditoria') %}
+                <li class=" nav-item">
+                    <a href="#">
+                        <i class="icon-search"></i>
+                        <span data-i18n="nav.dash.main" class="menu-title">Auditoria</span>
+                    </a>
+                    <ul class="menu-content">
+                        {% if app.user.permiso('consultar_movimientos') %}
+                        <li>
+                            <a href="{{ path('svao.protected.audit') }}" data-i18n="nav.dash.main" class="menu-item">Consultar movimientos</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                </li>
+            {% endif %}
         </ul>
     </div>
 </div>
